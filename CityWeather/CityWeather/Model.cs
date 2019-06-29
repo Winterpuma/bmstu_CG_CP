@@ -12,9 +12,11 @@ namespace CityWeather
     {
         List<Point3D> vertices;
         public List<Polygon> polygons;
+        private Color basicColor = Color.Black;
         
-        public Model()
+        public Model(Color color)
         {
+            basicColor = color;
             vertices = new List<Point3D>();
             polygons = new List<Polygon>();
         }
@@ -31,28 +33,47 @@ namespace CityWeather
             {
                 verticesPolygon.Add(vertices[i]);
             }
-            polygons.Add(new Polygon(verticesPolygon));
+            polygons.Add(new Polygon(verticesPolygon, basicColor));
         }
     }
+        
 
     class Polygon
     {
         List<Point3D> v;
-        Color color = Color.Orange;
+
+        Color basicColor = Color.Black;
         public List<Point3D> pointsInside;
 
+        #region Создание Polygon
         public Polygon()
         {
             pointsInside = new List<Point3D>();
             v = new List<Point3D>();
         }
-
+        
         public Polygon(List<Point3D> vertex)
         {
             pointsInside = new List<Point3D>();
             v = vertex;
         }
-        
+
+        public Polygon(Color color)
+        {
+            basicColor = color;
+            pointsInside = new List<Point3D>();
+            v = new List<Point3D>();
+        }
+
+        public Polygon(List<Point3D> vertex, Color color)
+        {
+            pointsInside = new List<Point3D>();
+            v = vertex;
+            basicColor = color;
+        }
+        #endregion
+
+        #region Нахождение внутренних точек
         public void CalculatePointsInside(int width, int height)
         {
             pointsInside = new List<Point3D>();
@@ -164,11 +185,12 @@ namespace CityWeather
                 }
             }
         }
+        #endregion
         
-
         public Color GetColor()
         {
-            return color; // color with count of shades??
+
+            return basicColor; // color with count of shades??
         }
     }
 
@@ -180,6 +202,44 @@ namespace CityWeather
             this.x = x;
             this.y = y;
             this.z = z;
+        }
+    }
+
+    class Vector
+    {
+        public int x, y, z;
+
+        public Vector(int x, int y, int z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        public Vector(Point3D a, Point3D b)
+        {
+            x = b.x - a.x;
+            y = b.y - a.y;
+            z = b.z - b.z;
+        }
+
+        public double GetLength()
+        {
+            return Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        public static Vector VectorMultiplication(Vector a, Vector b)
+        {
+            Vector res = new Vector(0, 0, 0);
+            res.x = a.y * b.z - a.z * b.y;
+            res.y = a.z * b.x - a.x * b.z;
+            res.z = a.x * b.y - a.y * b.x;
+            return res;
+        }
+
+        public static float ScalarMultiplication(Vector a, Vector b)
+        {
+            return a.x * b.x + a.y * b.y + a.z * b.z;
         }
     }
 }

@@ -22,17 +22,19 @@ namespace CityWeather
             img = new Bitmap(canvas.Width, canvas.Height);
             g = Graphics.FromImage(img);
             scene = new List<Model>();
-            createCubeTurned();
+            //createCube();
+            createCubeTurned(Color.Red, -30, -80);
+            //createCubeTurned(Color.Orange, 30, -80);
 
             canvas.Image = Zbuffer.GetImage(scene, canvas.Size);//img;
         }
 
         private void createCube()
         {
-            Model m = new Model();
+            Model m = new Model(Color.Red);
 
-            int xl = 100, xu = 200;
-            int yl = 100, yu = 200;
+            int xl = 150, xu = 250;
+            int yl = 100, yu = 250;
             int zl = 100, zu = 200;
 
             m.AddVertex(new Point3D(xl, yu, zu));
@@ -54,15 +56,13 @@ namespace CityWeather
             scene.Add(m);
         }
 
-        private void createCubeTurned()
+        private void createCubeTurned(Color color, int xcoef, int ycoef)
         {
-            Model m = new Model();
+            Model m = new Model(color);
 
             int xl = 100, xu = 200;
             int yl = 100, yu = 200;
             int zl = 100, zu = 200;
-
-            int xcoef = 30, ycoef = -80;
 
             m.AddVertex(new Point3D(xl, yu, zu));
             m.AddVertex(new Point3D(xu, yu, zu));
