@@ -51,6 +51,7 @@ namespace CityWeather
             m.CreatePolygon(0, 1, 5, 4);
             m.CreatePolygon(3, 2, 6, 7);
 
+
             scene.Add(m);
         }
 

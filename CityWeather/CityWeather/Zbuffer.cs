@@ -42,7 +42,7 @@ namespace CityWeather
         {
             foreach (Polygon polygon in m.polygons)
             {
-                polygon.CalculatePointsInside();
+                polygon.CalculatePointsInside(res.Width, res.Height);
                 foreach (Point3D point in polygon.pointsInside)
                 {
                     ProcessPoint(point, polygon.GetColor());
