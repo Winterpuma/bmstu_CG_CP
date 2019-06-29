@@ -22,12 +22,12 @@ namespace CityWeather
             img = new Bitmap(canvas.Width, canvas.Height);
             g = Graphics.FromImage(img);
             scene = new List<Model>();
-            createModel();
+            createCubeTurned();
 
             canvas.Image = Zbuffer.GetImage(scene, canvas.Size);//img;
         }
 
-        private void createModel()
+        private void createCube()
         {
             Model m = new Model();
 
@@ -51,6 +51,36 @@ namespace CityWeather
             m.CreatePolygon(0, 1, 5, 4);
             m.CreatePolygon(3, 2, 6, 7);
 
+            scene.Add(m);
+        }
+
+        private void createCubeTurned()
+        {
+            Model m = new Model();
+
+            int xl = 100, xu = 200;
+            int yl = 100, yu = 200;
+            int zl = 100, zu = 200;
+
+            int xcoef = 30, ycoef = -80;
+
+            m.AddVertex(new Point3D(xl, yu, zu));
+            m.AddVertex(new Point3D(xu, yu, zu));
+            m.AddVertex(new Point3D(xu, yl, zu));
+            m.AddVertex(new Point3D(xl, yl, zu));
+
+            // задняя
+            m.AddVertex(new Point3D(xl + xcoef, yu + ycoef, zl));
+            m.AddVertex(new Point3D(xu + xcoef, yu + ycoef, zl));
+            m.AddVertex(new Point3D(xu + xcoef, yl + ycoef, zl));
+            m.AddVertex(new Point3D(xl + xcoef, yl + ycoef, zl));
+
+            m.CreatePolygon(0, 1, 2, 3);
+            m.CreatePolygon(4, 5, 6, 7);
+            m.CreatePolygon(0, 4, 7, 3);
+            m.CreatePolygon(1, 5, 6, 2);
+            m.CreatePolygon(0, 1, 5, 4);
+            m.CreatePolygon(3, 2, 6, 7);
 
             scene.Add(m);
         }
