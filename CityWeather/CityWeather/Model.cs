@@ -57,7 +57,7 @@ namespace CityWeather
         {
             pointsInside = new List<Point3D>();
             v = vertex;
-            normal = Vector.GetNormal(v[0], v[1], v[2]);
+            normal = GetNormal();
         }
 
         public Polygon(Color color)
@@ -65,7 +65,7 @@ namespace CityWeather
             basicColor = color;
             pointsInside = new List<Point3D>();
             v = new List<Point3D>();
-            normal = Vector.GetNormal(v[0], v[1], v[2]);
+            normal = GetNormal();
         }
 
         public Polygon(List<Point3D> vertex, Color color)
@@ -73,7 +73,7 @@ namespace CityWeather
             pointsInside = new List<Point3D>();
             v = vertex;
             basicColor = color;
-            normal = Vector.GetNormal(v[0], v[1], v[2]);
+            normal = GetNormal();
         }
         #endregion
 
@@ -190,20 +190,38 @@ namespace CityWeather
             }
         }
         #endregion
-        
+
+        public Vector GetNormal()
+        {
+            int len = v.Count();
+            int a = 0, b = 0, c = 0;
+            for (int i = 0; i < len - 1; i++)
+            {
+                a += (v[i].y - v[i + 1].y) * (v[i].z + v[i + 1].z);
+                b += (v[i].x - v[i + 1].x) * (v[i].z + v[i + 1].z);
+                c += (v[i].x - v[i + 1].x) * (v[i].y + v[i + 1].y);
+            }
+            a += (v[len - 1].y - v[0].y) * (v[len - 1].z + v[0].z);
+            b += (v[len - 1].x - v[0].x) * (v[len - 1].z + v[0].z);
+            c += (v[len - 1].x - v[0].x) * (v[len - 1].y + v[0].y);
+            return new Vector(a, b, c);
+        }
+
+
         public Color GetColor(LightSource light)
         {
             
-            double cos = Vector.ScalarMultiplication(light.direction, normal) / (light.direction.length * normal.length);
-            cos += 1;
-            //cos *= 50; // проценты
-            cos *= 127;
-
+            double cos = Vector.ScalarMultiplication(light.direction, normal) / 
+                (light.direction.length * normal.length);
+            //cos += 1;
+            //cos *= 127;
+            cos = Math.Abs(cos);
+            cos *= 255;
             return Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256);//basicColor.R + (int)cos, basicColor.G + (int)cos, basicColor.B + (int)cos);
             
         }
     }
-
+    ////cos *= 50; // проценты
     class Point3D
     {
         public int x, y, z;
@@ -217,7 +235,7 @@ namespace CityWeather
 
     class Vector
     {
-        public int x, y, z;
+        public double x, y, z;
         public double length;
 
         public Vector(int x, int y, int z)
@@ -235,14 +253,7 @@ namespace CityWeather
             z = b.z - b.z;
             FindLength();
         }
-
-        public static Vector GetNormal(Point3D a, Point3D b, Point3D c)
-        {
-            Vector ab = new Vector(a, b);
-            Vector ac = new Vector(c, b);
-            return Vector.VectorMultiplication(ab, ac);
-        }
-
+        
         private void FindLength()
         {
             length = Math.Sqrt(x * x + y * y + z * z);
@@ -263,7 +274,7 @@ namespace CityWeather
             return res;
         }
 
-        public static float ScalarMultiplication(Vector a, Vector b)
+        public static double ScalarMultiplication(Vector a, Vector b)
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }

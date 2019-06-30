@@ -23,35 +23,17 @@ namespace CityWeather
             g = Graphics.FromImage(img);
             scene = new List<Model>();
             //createCube();
-            //createCubeTurned(Color.Red, -30, -80);
-            //createCubeTurned(Color.Orange, 30, -80);
-            createPyramid();
+            createCubeTurned(Color.Red, -30, -80, 100, 100, 200);
+            createCubeTurned(Color.Red, -50, -80, 400, 100, 300);
 
-            canvas.Image = Zbuffer.GetImage(scene, canvas.Size);//img;
+            createCubeTurned(Color.Orange, 30, -80, 600, 100, 400);
+            createCubeTurned(Color.Orange, 30, -80, 800, 100, 350);
+
+            LightSource sun = new LightSource(new Vector(0, 0, -1), Color.White);
+
+            canvas.Image = Zbuffer.GetImage(scene, canvas.Size, sun);//img;
         }
-
-        private void createPyramid()
-        {
-            Model m = new Model(Color.Red);
-
-            int xc = 300, yc = 200, zc = 100;
-            int xp = 70, yp = 50, zp = 30;
-
-            m.AddVertex(new Point3D(xc, yc - yp, zc));
-
-            m.AddVertex(new Point3D(xc, yc + yp, zc - zp));
-            m.AddVertex(new Point3D(xc - xp, yc + yp, zc)); // left
-            m.AddVertex(new Point3D(xc + xp, yc + yp, zc)); // right
-            m.AddVertex(new Point3D(xc, yc + yp, zc + zp)); // close
-
-            m.CreatePolygon(0, 1, 2);
-            m.CreatePolygon(0, 1, 4);
-            m.CreatePolygon(0, 2, 3);
-            m.CreatePolygon(0, 3, 4);
-
-            scene.Add(m);
-        }
-
+        
         private void createCube()
         {
             Model m = new Model(Color.Red);
@@ -79,12 +61,12 @@ namespace CityWeather
             scene.Add(m);
         }
 
-        private void createCubeTurned(Color color, int xcoef, int ycoef)
+        private void createCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h)
         {
             Model m = new Model(color);
 
-            int xl = 100, xu = 200;
-            int yl = 100, yu = 200;
+            int xl = x + 100, xu = x + 200;
+            int yl = y + 100, yu = y + h;
             int zl = 100, zu = 200;
 
             m.AddVertex(new Point3D(xl, yu, zu));
@@ -98,12 +80,13 @@ namespace CityWeather
             m.AddVertex(new Point3D(xu + xcoef, yl + ycoef, zl));
             m.AddVertex(new Point3D(xl + xcoef, yl + ycoef, zl));
 
-            m.CreatePolygon(0, 1, 2, 3);
-            m.CreatePolygon(4, 5, 6, 7);
-            m.CreatePolygon(0, 4, 7, 3);
-            m.CreatePolygon(1, 5, 6, 2);
-            m.CreatePolygon(0, 1, 5, 4);
-            m.CreatePolygon(3, 2, 6, 7);
+            m.CreatePolygon(3, 2, 6, 7); // верхняя
+            m.CreatePolygon(0, 1, 2, 3); // передняя
+            m.CreatePolygon(0, 4, 7, 3); // левая
+            m.CreatePolygon(4, 5, 6, 7); // задняя
+            m.CreatePolygon(1, 5, 6, 2); // правая
+            m.CreatePolygon(0, 1, 5, 4); // нижняя
+            
 
             scene.Add(m);
         }

@@ -18,16 +18,14 @@ namespace CityWeather
         /// <param name="models">Список всех моделей сцены</param>
         /// <param name="size">Размер сцены</param>
         /// <returns></returns>
-        public static Bitmap GetImage(List<Model> models, Size size)
+        public static Bitmap GetImage(List<Model> models, Size size, LightSource sun)
         {
             res = new Bitmap(size.Width, size.Height);
             Zbuf = new int[size.Height][];
 
             for (int i = 0; i < size.Height; i++)
                 Zbuf[i] = new int[size.Width]; // нули???
-
-            LightSource sun = new LightSource(new Vector(0, 0, -1), Color.White);
-
+            
             foreach (Model m in models)
             {
                 ProcessModel(m, sun);
@@ -61,7 +59,7 @@ namespace CityWeather
         /// <param name="color">Цвет точки</param>
         private static void ProcessPoint(Point3D point, Color color)
         {
-            if (point.x < 0 || point.x > Zbuf[0].Length || point.y < 0 || point.y > Zbuf.Length) // а если нет zbuf0?
+            if (point.x < 0 || point.x >= Zbuf[0].Length || point.y < 0 || point.y >= Zbuf.Length) // а если нет zbuf0?
                 return;
             if (point.z > Zbuf[point.y][point.x])
             {
