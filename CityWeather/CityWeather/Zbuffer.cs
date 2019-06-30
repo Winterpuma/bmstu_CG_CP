@@ -26,9 +26,11 @@ namespace CityWeather
             for (int i = 0; i < size.Height; i++)
                 Zbuf[i] = new int[size.Width]; // нули???
 
+            LightSource sun = new LightSource(new Vector(0, 0, -1), Color.White);
+
             foreach (Model m in models)
             {
-                ProcessModel(m);
+                ProcessModel(m, sun);
             }
             
             return res;
@@ -38,14 +40,16 @@ namespace CityWeather
         /// Обрабока одной модели
         /// </summary>
         /// <param name="m">Модель</param>
-        private static void ProcessModel(Model m)
+        private static void ProcessModel(Model m, LightSource sun)
         {
+            Color draw;
             foreach (Polygon polygon in m.polygons)
             {
                 polygon.CalculatePointsInside(res.Width, res.Height);
+                draw = polygon.GetColor(sun);
                 foreach (Point3D point in polygon.pointsInside)
                 {
-                    ProcessPoint(point, polygon.GetColor());
+                    ProcessPoint(point, draw);
                 }
             }
         }

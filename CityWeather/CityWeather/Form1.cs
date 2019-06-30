@@ -23,10 +23,33 @@ namespace CityWeather
             g = Graphics.FromImage(img);
             scene = new List<Model>();
             //createCube();
-            createCubeTurned(Color.Red, -30, -80);
+            //createCubeTurned(Color.Red, -30, -80);
             //createCubeTurned(Color.Orange, 30, -80);
+            createPyramid();
 
             canvas.Image = Zbuffer.GetImage(scene, canvas.Size);//img;
+        }
+
+        private void createPyramid()
+        {
+            Model m = new Model(Color.Red);
+
+            int xc = 300, yc = 200, zc = 100;
+            int xp = 70, yp = 50, zp = 30;
+
+            m.AddVertex(new Point3D(xc, yc - yp, zc));
+
+            m.AddVertex(new Point3D(xc, yc + yp, zc - zp));
+            m.AddVertex(new Point3D(xc - xp, yc + yp, zc)); // left
+            m.AddVertex(new Point3D(xc + xp, yc + yp, zc)); // right
+            m.AddVertex(new Point3D(xc, yc + yp, zc + zp)); // close
+
+            m.CreatePolygon(0, 1, 2);
+            m.CreatePolygon(0, 1, 4);
+            m.CreatePolygon(0, 2, 3);
+            m.CreatePolygon(0, 3, 4);
+
+            scene.Add(m);
         }
 
         private void createCube()
