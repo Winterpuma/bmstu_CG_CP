@@ -15,6 +15,7 @@ namespace CityWeather
         Bitmap img;
         Graphics g;
         List<Model> scene;
+        LightSource sun1, sun2, sun3, sun4, sun5;
 
         public Form1()
         {
@@ -22,19 +23,64 @@ namespace CityWeather
             img = new Bitmap(canvas.Width, canvas.Height);
             g = Graphics.FromImage(img);
             scene = new List<Model>();
-            //createCube();
-            createCubeTurned(Color.Red, -30, -80, 100, 100, 200);
-            createCubeTurned(Color.Red, -50, -80, 400, 100, 300);
 
-            createCubeTurned(Color.Orange, 30, -80, 600, 100, 400);
-            createCubeTurned(Color.Orange, 30, -80, 800, 100, 350);
-
-            LightSource sun = new LightSource(new Vector(0, 0, -1), Color.White);
-
-            canvas.Image = Zbuffer.GetImage(scene, canvas.Size, sun);//img;
+            CreateScene();
+            SetSun();
         }
-        
-        private void createCube()
+
+        #region Установка освещения
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UpdScene(sun1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UpdScene(sun2);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UpdScene(sun3);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            UpdScene(sun4);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            UpdScene(sun5);
+        }
+
+        private void SetSun()
+        {
+            sun1 = new LightSource(new Vector(1, 0, 0), Color.White);
+            sun2 = new LightSource(new Vector(0.5, 0, -0.5), Color.White);
+            sun3 = new LightSource(new Vector(0, 0, -1), Color.White);
+            sun4 = new LightSource(new Vector(-0.5, 0, -0.5), Color.White);
+            sun5 = new LightSource(new Vector(-1, 0, 0), Color.White);
+        }
+        #endregion
+
+        private void CreateScene()
+        {
+            //createCube();
+            CreateCubeTurned(Color.Red, -30, -80, 100, 100, 200);
+            CreateCubeTurned(Color.Red, -50, -80, 400, 100, 300);
+
+            CreateCubeTurned(Color.Orange, 30, -80, 600, 100, 400);
+            CreateCubeTurned(Color.Orange, 30, -80, 800, 100, 350);
+        }
+
+        private void UpdScene(LightSource sun)
+        {
+            canvas.Image = Zbuffer.GetImage(scene, canvas.Size, sun);
+        }
+    
+        #region Создание Параллелепипедов
+        private void CreateCube()
         {
             Model m = new Model(Color.Red);
 
@@ -61,7 +107,7 @@ namespace CityWeather
             scene.Add(m);
         }
 
-        private void createCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h)
+        private void CreateCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h)
         {
             Model m = new Model(color);
 
@@ -90,6 +136,6 @@ namespace CityWeather
 
             scene.Add(m);
         }
-
+        #endregion
     }
 }

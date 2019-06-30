@@ -210,18 +210,15 @@ namespace CityWeather
 
         public Color GetColor(LightSource light)
         {
-            
             double cos = Vector.ScalarMultiplication(light.direction, normal) / 
                 (light.direction.length * normal.length);
-            //cos += 1;
-            //cos *= 127;
             cos = Math.Abs(cos);
             cos *= 255;
-            return Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256);//basicColor.R + (int)cos, basicColor.G + (int)cos, basicColor.B + (int)cos);
+            return Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256);
             
         }
     }
-    ////cos *= 50; // проценты
+
     class Point3D
     {
         public int x, y, z;
@@ -239,6 +236,13 @@ namespace CityWeather
         public double length;
 
         public Vector(int x, int y, int z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            FindLength();
+        }
+        public Vector(double x, double y, double z)
         {
             this.x = x;
             this.y = y;
