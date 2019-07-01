@@ -16,16 +16,20 @@ namespace CityWeather
         Graphics g;
         List<Model> scene;
         LightSource sun1, sun2, sun3, sun4, sun5;
+        Zbuffer zbuf;
+        Drop rain;
 
         public Form1()
         {
             InitializeComponent();
             img = new Bitmap(canvas.Width, canvas.Height);
-            g = Graphics.FromImage(img);
+            g = canvas.CreateGraphics();
+            //g = Graphics.FromImage(img);
             scene = new List<Model>();
 
             CreateScene();
             SetSun();
+            StartRain();
         }
 
         #region Установка освещения
@@ -67,16 +71,39 @@ namespace CityWeather
         private void CreateScene()
         {
             //createCube();
-            CreateCubeTurned(Color.Red, -30, -80, 100, 100, 200);
-            CreateCubeTurned(Color.Red, -50, -80, 400, 100, 300);
+            CreateCubeTurned(Color.Red, -30, -80, 100, 500, 100);
+            CreateCubeTurned(Color.Red, -50, -80, 400, 500, 300);
 
-            CreateCubeTurned(Color.Orange, 30, -80, 600, 100, 400);
-            CreateCubeTurned(Color.Orange, 30, -80, 800, 100, 350);
+            CreateCubeTurned(Color.Orange, 30, -80, 600, 500, 400);
+            CreateCubeTurned(Color.Orange, 30, -80, 800, 500, 350);
         }
 
         private void UpdScene(LightSource sun)
         {
-            canvas.Image = Zbuffer.GetImage(scene, canvas.Size, sun);
+            zbuf = new Zbuffer(scene, canvas.Size, sun);
+            canvas.Image = zbuf.GetImage();
+            //g = Graphics.FromImage(canvas.Image);
+        }
+
+        private void buttonRain_Click(object sender, EventArgs e)
+        {
+            UpdRain();
+        }
+
+        private void StartRain()
+        {
+            //g = Graphics.FromImage(img);
+            rain = new Drop(canvas.Width, canvas.Height);
+        }
+
+        private void UpdRain()
+        {
+            canvas.Refresh();
+            if (rain.IsVisible(zbuf.GetZ(rain.GetPoint())) &&
+                rain.IsNextVisible(zbuf.GetZ(rain.GetNextPoint())))
+                g.DrawLine(Pens.Aqua, rain.GetPoint(), rain.GetNextPoint());
+            rain.Update();
+            canvas.Update();
         }
     
         #region Создание Параллелепипедов
@@ -112,7 +139,7 @@ namespace CityWeather
             Model m = new Model(color);
 
             int xl = x + 100, xu = x + 200;
-            int yl = y + 100, yu = y + h;
+            int yl = y, yu = y - h;
             int zl = 100, zu = 200;
 
             m.AddVertex(new Point3D(xl, yu, zu));
@@ -137,5 +164,6 @@ namespace CityWeather
             scene.Add(m);
         }
         #endregion
+               
     }
 }

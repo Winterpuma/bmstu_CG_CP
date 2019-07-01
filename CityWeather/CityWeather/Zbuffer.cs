@@ -9,8 +9,8 @@ namespace CityWeather
 {
     class Zbuffer
     {
-        static Bitmap res;
-        static int[][] Zbuf;
+        private Bitmap res;
+        private int[][] Zbuf;
 
         /// <summary>
         /// Получение изображения сцены
@@ -18,7 +18,7 @@ namespace CityWeather
         /// <param name="models">Список всех моделей сцены</param>
         /// <param name="size">Размер сцены</param>
         /// <returns></returns>
-        public static Bitmap GetImage(List<Model> models, Size size, LightSource sun)
+        public Zbuffer(List<Model> models, Size size, LightSource sun)
         {
             res = new Bitmap(size.Width, size.Height);
             Zbuf = new int[size.Height][];
@@ -30,15 +30,32 @@ namespace CityWeather
             {
                 ProcessModel(m, sun);
             }
-            
+        }
+
+        public Bitmap GetImage()
+        {
             return res;
+        }
+
+        public int[][] GetZbuf()
+        {
+            return Zbuf;
+        }
+
+        public int GetZ(int x, int y)
+        {
+            return Zbuf[y][x];
+        }
+        public int GetZ(Point p)
+        {
+            return Zbuf[p.Y][p.X];
         }
 
         /// <summary>
         /// Обрабока одной модели
         /// </summary>
         /// <param name="m">Модель</param>
-        private static void ProcessModel(Model m, LightSource sun)
+        private void ProcessModel(Model m, LightSource sun)
         {
             Color draw;
             foreach (Polygon polygon in m.polygons)
@@ -57,7 +74,7 @@ namespace CityWeather
         /// </summary>
         /// <param name="point">Точка</param>
         /// <param name="color">Цвет точки</param>
-        private static void ProcessPoint(Point3D point, Color color)
+        private void ProcessPoint(Point3D point, Color color)
         {
             if (point.x < 0 || point.x >= Zbuf[0].Length || point.y < 0 || point.y >= Zbuf.Length) // а если нет zbuf0?
                 return;
