@@ -106,7 +106,7 @@ namespace CityWeather
 
         private void CalculatePointsInsideTriangle(int width, int height, List<Point3D> v)
         {
-            int ymax, ymin;
+            int yMax, yMin;
             int[] x = new int[3], y = new int[3];
             
             for (int i = 0; i < 3; ++i)
@@ -115,77 +115,53 @@ namespace CityWeather
                 y[i] = v[i].y;
             }
             
-            ymax = ymin = y[0];
-            if (ymax < y[1])
-                ymax = y[1];
-            else
-                if (ymin > y[1])
-                ymin = y[1];
+            yMax = y.Max();
+            yMin = y.Min();
 
-            if (ymax < y[2])
-                ymax = y[2];
-            else
-                if (ymin > y[2])
-                ymin = y[2];
-            //ymax = v.Max<int>();
-
-            ymin = (ymin < 0) ? 0 : ymin;
-            ymax = (ymax < height) ? ymax : height;
+            yMin = (yMin < 0) ? 0 : yMin;
+            yMax = (yMax < height) ? yMax : height;
 
             int x1 = 0, x2 = 0;
             double z1 = 0, z2 = 0;
             
-            for (int ysc = ymin; ysc < ymax; ++ysc)
+            for (int yDot = yMin; yDot <= yMax; yDot++)
             {
-                int ne = 0;
-                for (int e = 0; e < 3; ++e)
+                int fFirst = 1;
+                for (int n = 0; n < 3; ++n)
                 {
-                    int e1 = e + 1;
-                    if (e1 == 3) e1 = 0;
-                    if (y[e] < y[e1])
+                    int n1 = (n == 2) ? 0 : n + 1;
+                    
+                    if (yDot >= Math.Max(y[n], y[n1]) || yDot < Math.Min(y[n], y[n1])) // || y[n] == y[n1]  
+                        continue; // точка вне
+                    
+                    double m = (double)(y[n] - yDot) / (y[n] - y[n1]);
+                    if (fFirst == 0)
                     {
-                        if (y[e1] <= ysc || ysc < y[e]) continue;
-                    }
-                    else if (y[e] > y[e1])
-                    {
-                        if (y[e1] > ysc || ysc >= y[e]) continue;
-                    }
-                    else continue;
-
-                    double tc = (double)(y[e] -ysc) / (y[e] - y[e1]);
-                    if (ne != 0)
-                    {
-                        x2 = x[e] + (int)(tc * (x[e1] - x[e]));
-                        z2 = v[e].z + tc * (v[e1].z - v[e].z);
+                        x2 = x[n] + (int)(m * (x[n1] - x[n]));
+                        z2 = v[n].z + m * (v[n1].z - v[n].z);
                     }
                     else
                     {
-                        x1 = x[e] + (int)(tc * (x[e1] - x[e]));
-                        z1 = v[e].z + tc * (v[e1].z - v[e].z);
+                        x1 = x[n] + (int)(m * (x[n1] - x[n]));
+                        z1 = v[n].z + m * (v[n1].z - v[n].z);
                     }
-                    ne = 1;
+                    fFirst = 0;
                 }
+
                 if(x2 < x1)
                 {
-                    int e = x1;
-                    x1 = x2;
-                    x2 = e;
-                    double tc = z1;
-                    z1 = z2;
-                    z2 = tc;
+                    Swap(ref x1, ref x2);
+                    Swap(ref z1, ref z2);
                 }
 
-                int xsc1 = ((x1 < 0)? 0 : x1);
-                int xsc2 = (x2 < width)? x2 : width;
-                for (int xsc = xsc1; xsc <= xsc2; ++xsc)
+                int xStart = (x1 < 0) ? 0 : x1;
+                int xEnd = (x2 < width)? x2 : width;
+                for (int xDot = xStart; xDot < xEnd; xDot++)
                 {
-                    double tc = (double)(x1 - xsc) / (x1 - x2);
-                    double z = z1 + tc* (z2 - z1);
+                    double m = (double)(x1 - xDot) / (x1 - x2);
+                    double zDot = z1 + m * (z2 - z1);
 
-                    pointsInside.Add(new Point3D(xsc, ysc, (int)z));
-                    /*if (z > (*(buff[ysc] + xsc )).z)
-                        (*(buff[ysc] + xsc)).col = t.col,
-                    (*(buff[ysc] + xsc)).z = z;*/
+                    pointsInside.Add(new Point3D(xDot, yDot, (int)zDot));
                 }
             }
         }
@@ -206,8 +182,7 @@ namespace CityWeather
             c += (v[len - 1].x - v[0].x) * (v[len - 1].y + v[0].y);
             return new Vector(a, b, c);
         }
-
-
+        
         public Color GetColor(LightSource light)
         {
             double cos = Vector.ScalarMultiplication(light.direction, normal) / 
@@ -216,6 +191,13 @@ namespace CityWeather
             cos *= 255;
             return Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256);
             
+        }
+
+        static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
         }
     }
 
@@ -283,4 +265,5 @@ namespace CityWeather
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }
     }
+    
 }
