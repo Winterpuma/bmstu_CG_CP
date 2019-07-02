@@ -35,6 +35,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.buttonRain = new System.Windows.Forms.Button();
+            this.buttonStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,11 +109,22 @@
             this.buttonRain.UseVisualStyleBackColor = true;
             this.buttonRain.Click += new System.EventHandler(this.buttonRain_Click);
             // 
+            // buttonStop
+            // 
+            this.buttonStop.Location = new System.Drawing.Point(1162, 376);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(75, 23);
+            this.buttonStop.TabIndex = 7;
+            this.buttonStop.Text = "Stop";
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 617);
+            this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonRain);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -136,6 +148,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button buttonRain;
+        private System.Windows.Forms.Button buttonStop;
     }
 }
 

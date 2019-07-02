@@ -10,24 +10,24 @@ namespace CityWeather
     class Drop
     {
         int x, y, z;
-        int dx, dy, dz;
-        static Random rnd = new Random();
-
-        public Drop(int width, int height)
+        
+        public Drop(int x, int y, int z)
         {
-            x = rnd.Next(0, 400);
-            y = 0;
-            z = 700;//rnd.Next(300, 600);
-            dx = rnd.Next(10, 15);
-            dy = rnd.Next(10, 15);
-            dz = rnd.Next(10, 15);
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
-        public void Update()
+        public void Update(int dx, int dy, int dz)
         {
             x += dx;
             y += dy;
             z += dz;
+        }
+
+        public void Draw(Graphics g, Pen pen, int dx, int dy)
+        {
+            g.DrawLine(pen, x, y, x + dx, y + dy);
         }
 
         public int GetDepth()
@@ -42,7 +42,7 @@ namespace CityWeather
             return false;
         }
 
-        public bool IsNextVisible(int maxZ)
+        public bool IsNextVisible(int maxZ, int dz)
         {
             if ((z + dz) > maxZ)
                 return true;
@@ -54,9 +54,70 @@ namespace CityWeather
             return new Point(x, y);
         }
 
-        public Point GetNextPoint()
+        public Point GetNextPoint(int dx, int dy)
         {
             return new Point(x + dx, y + dy);
         }
+
+        public static bool IsBelow(Drop d)
+        {
+            if (d.y > 1000)
+                return true;
+            return false;
+        }
+
     }
+
+    class ParticleSystem
+    {
+        List<Drop> system;
+        Vector direction;
+        int xMax, yMax;
+        int intensity;
+
+        static Random rnd = new Random();
+
+        public ParticleSystem(int width, int height, Vector dir, int intensity)
+        {
+            system = new List<Drop>();
+            direction = dir;
+            xMax = width;
+            yMax = height;
+            this.intensity = intensity;
+            InitParticles();
+        }
+
+        public void InitParticles()
+        {
+            for (int i = 0; i < intensity; i++)
+                system.Add(new Drop(rnd.Next(-400, xMax + 400), 0, 700)); // не 700!
+        }
+
+        private void UpdateParticles()
+        {
+            foreach (Drop drop in system)
+            {
+                drop.Update((int)direction.x, (int)direction.y, (int)direction.z);
+            }
+            system.RemoveAll(Drop.IsBelow);
+        }
+
+        public void DrawParticles(Graphics g, Pen pen)
+        {
+            foreach (Drop drop in system)
+            {
+                drop.Draw(g, pen, (int)direction.x, (int)direction.y);
+            }
+        }
+        
+        public void ProcessSystem(Graphics g, Pen pen)
+        {
+            DrawParticles(g, pen);
+            UpdateParticles();
+        }
+
+
+        
+    }
+
 }

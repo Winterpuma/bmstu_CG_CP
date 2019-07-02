@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace CityWeather
 {
@@ -17,14 +18,15 @@ namespace CityWeather
         List<Model> scene;
         LightSource sun1, sun2, sun3, sun4, sun5;
         Zbuffer zbuf;
-        Drop rain;
+        ParticleSystem rain;
+        
 
         public Form1()
         {
             InitializeComponent();
+
             img = new Bitmap(canvas.Width, canvas.Height);
             g = canvas.CreateGraphics();
-            //g = Graphics.FromImage(img);
             scene = new List<Model>();
 
             CreateScene();
@@ -82,30 +84,45 @@ namespace CityWeather
         {
             zbuf = new Zbuffer(scene, canvas.Size, sun);
             canvas.Image = zbuf.GetImage();
-            //g = Graphics.FromImage(canvas.Image);
         }
 
+        #region Дождь
         private void buttonRain_Click(object sender, EventArgs e)
         {
-            UpdRain();
+            int delay = 50;
+            for (int i = 0; i < 60; i++)
+            {
+                UpdRain();
+                rain.InitParticles();
+                System.Threading.Thread.Sleep(delay);
+            }
+
+            for (int i = 0; i < 50; i++) // while not empty?
+            {
+                UpdRain();
+                System.Threading.Thread.Sleep(delay);
+            }
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            canvas.Refresh();
+            StartRain();
         }
 
         private void StartRain()
         {
-            //g = Graphics.FromImage(img);
-            rain = new Drop(canvas.Width, canvas.Height);
+            rain = new ParticleSystem(canvas.Width, canvas.Height, new Vector(20, 20, 0), 5);
         }
 
         private void UpdRain()
         {
             canvas.Refresh();
-            if (rain.IsVisible(zbuf.GetZ(rain.GetPoint())) &&
-                rain.IsNextVisible(zbuf.GetZ(rain.GetNextPoint())))
-                g.DrawLine(Pens.Aqua, rain.GetPoint(), rain.GetNextPoint());
-            rain.Update();
+            rain.ProcessSystem(g, new Pen(Color.LightBlue, 2));
             canvas.Update();
         }
-    
+        #endregion
+
         #region Создание Параллелепипедов
         private void CreateCube()
         {
