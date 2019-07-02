@@ -31,7 +31,8 @@ namespace CityWeather
 
             CreateScene();
             SetSun();
-            StartRain();
+
+            UpdScene(sun3);
         }
 
         #region Установка освещения
@@ -89,11 +90,19 @@ namespace CityWeather
         #region Дождь
         private void buttonRain_Click(object sender, EventArgs e)
         {
-            int delay = 50;
-            for (int i = 0; i < 60; i++)
+            int intensity = Convert.ToInt32(textBoxIntensiveness.Text);
+            int dx = Convert.ToInt32(textBoxDx.Text);
+            int dy = Convert.ToInt32(textBoxDy.Text);
+            int dz = Convert.ToInt32(textBoxDz.Text);
+            Vector wind = new Vector(dx, dy, dz);
+
+            StartRain(intensity, wind);
+
+            int delay = Convert.ToInt32(textBoxDelay.Text);
+            for (int i = 0; i < 100; i++)
             {
                 UpdRain();
-                rain.InitParticles();
+                rain.InitParticles(intensity);
                 System.Threading.Thread.Sleep(delay);
             }
 
@@ -103,16 +112,10 @@ namespace CityWeather
                 System.Threading.Thread.Sleep(delay);
             }
         }
-
-        private void buttonStop_Click(object sender, EventArgs e)
+        
+        private void StartRain(int intensity, Vector direction)
         {
-            canvas.Refresh();
-            StartRain();
-        }
-
-        private void StartRain()
-        {
-            rain = new ParticleSystem(canvas.Width, canvas.Height, new Vector(20, 20, 0), 5);
+            rain = new ParticleSystem(canvas.Width, canvas.Height, direction, intensity);
         }
 
         private void UpdRain()

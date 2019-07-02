@@ -73,7 +73,6 @@ namespace CityWeather
         List<Drop> system;
         Vector direction;
         int xMax, yMax;
-        int intensity;
 
         static Random rnd = new Random();
 
@@ -83,11 +82,10 @@ namespace CityWeather
             direction = dir;
             xMax = width;
             yMax = height;
-            this.intensity = intensity;
-            InitParticles();
+            InitParticles(intensity);
         }
 
-        public void InitParticles()
+        public void InitParticles(int intensity)
         {
             for (int i = 0; i < intensity; i++)
                 system.Add(new Drop(rnd.Next(-400, xMax + 400), 0, 700)); // не 700!
@@ -115,8 +113,6 @@ namespace CityWeather
             DrawParticles(g, pen);
             UpdateParticles();
         }
-
-
         
     }
 
