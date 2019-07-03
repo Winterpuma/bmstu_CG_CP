@@ -16,11 +16,10 @@ namespace CityWeather
         Bitmap img;
         Graphics g;
         List<Model> scene;
-        LightSource sun1, sun2, sun3, sun4, sun5;
+        LightSource sun1, sun2, sun3, sun4, sun5, current;
         Zbuffer zbuf;
         ParticleSystem rain;
-        
-
+                
         public Form1()
         {
             InitializeComponent();
@@ -71,6 +70,7 @@ namespace CityWeather
         }
         #endregion
 
+        #region Сцена
         private void CreateScene()
         {
             //createCube();
@@ -85,7 +85,21 @@ namespace CityWeather
         {
             zbuf = new Zbuffer(scene, canvas.Size, sun);
             canvas.Image = zbuf.GetImage();
+            current = sun;
         }
+
+        private void buttonAddBuilding_Click(object sender, EventArgs e)
+        {
+            int x = Convert.ToInt32(textBoxSX.Text);
+            int y = Convert.ToInt32(textBoxSY.Text);
+            int z = Convert.ToInt32(textBoxSZ.Text);
+            int dx = Convert.ToInt32(textBoxSDx.Text);
+            int dy = Convert.ToInt32(textBoxSDy.Text);
+            int h = Convert.ToInt32(textBoxSH.Text);
+            CreateCubeTurned(Color.Black, dx, dy, x, y, h, z);
+            UpdScene(current);
+        }
+        #endregion
 
         #region Дождь
         private void buttonRain_Click(object sender, EventArgs e)
@@ -106,12 +120,13 @@ namespace CityWeather
                 System.Threading.Thread.Sleep(delay);
             }
 
-            for (int i = 0; i < 50; i++) // while not empty?
+            /*for (int i = 0; i < 50; i++) // while not empty?
             {
                 UpdRain();
                 System.Threading.Thread.Sleep(delay);
-            }
+            }*/
         }
+
         
         private void StartRain(int intensity, Vector direction)
         {
@@ -154,13 +169,13 @@ namespace CityWeather
             scene.Add(m);
         }
 
-        private void CreateCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h)
+        private void CreateCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h, int zl = 100)
         {
             Model m = new Model(color);
 
-            int xl = x + 100, xu = x + 200;
+            int xl = x, xu = x + 100;
             int yl = y, yu = y - h;
-            int zl = 100, zu = 200;
+            int zu = zl + 100;
 
             m.AddVertex(new Point3D(xl, yu, zu));
             m.AddVertex(new Point3D(xu, yu, zu));

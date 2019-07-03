@@ -48,7 +48,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonAddBuilding = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@
             this.textBoxSZ = new System.Windows.Forms.TextBox();
             this.textBoxSDx = new System.Windows.Forms.TextBox();
             this.textBoxSDy = new System.Windows.Forms.TextBox();
-            this.textBoxSDz = new System.Windows.Forms.TextBox();
+            this.textBoxSH = new System.Windows.Forms.TextBox();
             this.groupBoxLight.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -260,7 +260,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBoxSDz);
+            this.groupBox3.Controls.Add(this.textBoxSH);
             this.groupBox3.Controls.Add(this.textBoxSDy);
             this.groupBox3.Controls.Add(this.textBoxSDx);
             this.groupBox3.Controls.Add(this.textBoxSZ);
@@ -272,7 +272,7 @@
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.buttonAddBuilding);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(1129, 44);
             this.groupBox3.Name = "groupBox3";
@@ -281,14 +281,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сцена";
             // 
-            // button1
+            // buttonAddBuilding
             // 
-            this.button1.Location = new System.Drawing.Point(6, 104);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Добавить здание";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonAddBuilding.Location = new System.Drawing.Point(6, 104);
+            this.buttonAddBuilding.Name = "buttonAddBuilding";
+            this.buttonAddBuilding.Size = new System.Drawing.Size(151, 23);
+            this.buttonAddBuilding.TabIndex = 0;
+            this.buttonAddBuilding.Text = "Добавить здание";
+            this.buttonAddBuilding.UseVisualStyleBackColor = true;
+            this.buttonAddBuilding.Click += new System.EventHandler(this.buttonAddBuilding_Click);
             // 
             // label6
             // 
@@ -331,9 +332,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(82, 78);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(27, 17);
+            this.label10.Size = new System.Drawing.Size(20, 17);
             this.label10.TabIndex = 19;
-            this.label10.Text = "dz:";
+            this.label10.Text = "h:";
             // 
             // label11
             // 
@@ -350,6 +351,7 @@
             this.textBoxSX.Name = "textBoxSX";
             this.textBoxSX.Size = new System.Drawing.Size(38, 23);
             this.textBoxSX.TabIndex = 21;
+            this.textBoxSX.Text = "30";
             // 
             // textBoxSY
             // 
@@ -357,6 +359,7 @@
             this.textBoxSY.Name = "textBoxSY";
             this.textBoxSY.Size = new System.Drawing.Size(38, 23);
             this.textBoxSY.TabIndex = 22;
+            this.textBoxSY.Text = "300";
             // 
             // textBoxSZ
             // 
@@ -364,6 +367,7 @@
             this.textBoxSZ.Name = "textBoxSZ";
             this.textBoxSZ.Size = new System.Drawing.Size(38, 23);
             this.textBoxSZ.TabIndex = 23;
+            this.textBoxSZ.Text = "100";
             // 
             // textBoxSDx
             // 
@@ -371,6 +375,7 @@
             this.textBoxSDx.Name = "textBoxSDx";
             this.textBoxSDx.Size = new System.Drawing.Size(38, 23);
             this.textBoxSDx.TabIndex = 24;
+            this.textBoxSDx.Text = "20";
             // 
             // textBoxSDy
             // 
@@ -378,13 +383,15 @@
             this.textBoxSDy.Name = "textBoxSDy";
             this.textBoxSDy.Size = new System.Drawing.Size(38, 23);
             this.textBoxSDy.TabIndex = 25;
+            this.textBoxSDy.Text = "-50";
             // 
-            // textBoxSDz
+            // textBoxSH
             // 
-            this.textBoxSDz.Location = new System.Drawing.Point(108, 75);
-            this.textBoxSDz.Name = "textBoxSDz";
-            this.textBoxSDz.Size = new System.Drawing.Size(38, 23);
-            this.textBoxSDz.TabIndex = 26;
+            this.textBoxSH.Location = new System.Drawing.Point(108, 75);
+            this.textBoxSH.Name = "textBoxSH";
+            this.textBoxSH.Size = new System.Drawing.Size(38, 23);
+            this.textBoxSH.TabIndex = 26;
+            this.textBoxSH.Text = "50";
             // 
             // Form1
             // 
@@ -433,7 +440,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBoxSDz;
+        private System.Windows.Forms.TextBox textBoxSH;
         private System.Windows.Forms.TextBox textBoxSDy;
         private System.Windows.Forms.TextBox textBoxSDx;
         private System.Windows.Forms.TextBox textBoxSZ;
@@ -445,7 +452,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonAddBuilding;
     }
 }
 
