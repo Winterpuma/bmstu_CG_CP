@@ -189,7 +189,7 @@ namespace CityWeather
                 (light.direction.length * normal.length);
             cos = Math.Abs(cos);
             cos *= 255;
-            return Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256);
+            return Colors.mix(Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256), Color.Orange, 0.25f);
             
         }
 
