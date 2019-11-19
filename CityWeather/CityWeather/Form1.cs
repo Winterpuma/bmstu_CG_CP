@@ -120,7 +120,13 @@ namespace CityWeather
                 System.Threading.Thread.Sleep(delay);
             }
 
-            /*for (int i = 0; i < 50; i++) // while not empty?
+            while (!rain.IsEmpty())
+            {
+                UpdRain();
+                System.Threading.Thread.Sleep(delay);
+            }
+            /*
+            for (int i = 0; i < 50; i++) // while not empty?
             {
                 UpdRain();
                 System.Threading.Thread.Sleep(delay);
@@ -138,6 +144,13 @@ namespace CityWeather
             canvas.Refresh();
             rain.ProcessSystem(g, new Pen(Color.LightBlue, 2));
             canvas.Update();
+        }
+        #endregion
+
+        #region Туман
+        private void buttonFog_Click(object sender, EventArgs e)
+        {
+            canvas.Image = Fog.AddFog(zbuf, 5);
         }
         #endregion
 

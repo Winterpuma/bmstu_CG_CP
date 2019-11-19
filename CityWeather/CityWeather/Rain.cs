@@ -114,6 +114,10 @@ namespace CityWeather
             UpdateParticles();
         }
         
+        public bool IsEmpty() // Эффективно ли?
+        {
+            return (system.Count == 0);
+        }
     }
 
 }
