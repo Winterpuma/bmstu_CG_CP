@@ -62,6 +62,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.buttonAddBuilding = new System.Windows.Forms.Button();
             this.buttonFog = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -258,6 +259,7 @@
             this.canvas.Size = new System.Drawing.Size(1068, 519);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
+            this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
             // 
             // groupBox3
             // 
@@ -404,11 +406,21 @@
             this.buttonFog.UseVisualStyleBackColor = true;
             this.buttonFog.Click += new System.EventHandler(this.buttonFog_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(41, 52);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 16;
+            this.label12.Text = "label12";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1304, 617);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.buttonFog);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -427,6 +439,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -466,6 +479,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button buttonAddBuilding;
         private System.Windows.Forms.Button buttonFog;
+        private System.Windows.Forms.Label label12;
     }
 }
 

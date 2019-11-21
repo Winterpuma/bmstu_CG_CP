@@ -34,6 +34,11 @@ namespace CityWeather
             UpdScene(sun3);
         }
 
+        private void canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            label12.Text = zbuf.GetZ(e.X, e.Y).ToString();
+        }
+
         #region Установка освещения
         private void button1_Click(object sender, EventArgs e)
         {
@@ -133,7 +138,6 @@ namespace CityWeather
             }*/
         }
 
-        
         private void StartRain(int intensity, Vector direction)
         {
             rain = new ParticleSystem(canvas.Width, canvas.Height, direction, intensity);
@@ -150,7 +154,7 @@ namespace CityWeather
         #region Туман
         private void buttonFog_Click(object sender, EventArgs e)
         {
-            canvas.Image = Fog.AddFog(zbuf, 5);
+            canvas.Image = Fog.AddFog(zbuf, 100);
         }
         #endregion
 
