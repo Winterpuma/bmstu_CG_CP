@@ -11,17 +11,17 @@ namespace CityWeather
     {
         public static Color fogColor = Color.Gray;
 
-        public static Bitmap AddFog(Zbuffer map, int farthestZ)
+        public static Bitmap AddFog(Zbuffer map, int farthestZ, int viewZ)
         {
-            Bitmap img = map.GetImage();
-            int closestZ = 0;
+            Bitmap img = map.GetImage().Clone(new Rectangle(0, 0, map.GetImage().Width, map.GetImage().Height), System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            /*int closestZ = 0;
             foreach(int[] i in map.GetZbuf())
             {
                 if (i.Max() > closestZ)
                     closestZ = i.Max();
-            }
+            }*/
 
-            float rangeZ = closestZ - farthestZ;
+            float rangeZ = viewZ - farthestZ;
             for (int i = 0; i < img.Width; i++)
             {
                 for (int j = 0; j < img.Height; j++)
