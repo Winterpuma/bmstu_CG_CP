@@ -20,6 +20,7 @@ namespace CityWeather
         LightSource sun1, sun2, sun3, sun4, sun5, current;
         Zbuffer zbuf;
         ParticleSystem rain;
+        static int ground = 400;
                 
         public Form1()
         {
@@ -80,13 +81,14 @@ namespace CityWeather
         #region Сцена
         private void CreateScene()
         {
-            //CreateCube();
-            CreateCubeTurned(Color.Red, -30, -80, 100, 500, 100);
-            CreateCubeTurned(Color.Red, -50, -80, 400, 500, 300);
+            CreateGround(Color.Green, canvas.Width /2, 400 , canvas.Width / 2, 1000);
+            CreateCube(Color.DarkOrange, 300, 100, 0, 150, 300);
+            CreateCube(Color.Red, 750, 150, 100, 100, 100);
 
-            CreateCubeTurned(Color.Orange, 30, -80, 600, 500, 400);
-            CreateCubeTurned(Color.Orange, 30, -80, 800, 500, 350);
-            
+            foreach (Model m in scene)
+            {
+                m.TransformModel(-20, -30, 0);
+            }
         }
 
         private void UpdScene(LightSource sun)
@@ -99,12 +101,11 @@ namespace CityWeather
         private void buttonAddBuilding_Click(object sender, EventArgs e)
         {
             int x = Convert.ToInt32(textBoxSX.Text);
-            int y = Convert.ToInt32(textBoxSY.Text);
             int z = Convert.ToInt32(textBoxSZ.Text);
             int dx = Convert.ToInt32(textBoxSDx.Text);
-            int dy = Convert.ToInt32(textBoxSDy.Text);
+            int dz = Convert.ToInt32(textBoxSDz.Text);
             int h = Convert.ToInt32(textBoxSH.Text);
-            CreateCubeTurned(Color.Black, dx, dy, x, y, h, z);
+            CreateCube(Color.Black, x, dx, z, dz, h);
             UpdScene(current);
         }
         #endregion
@@ -165,51 +166,21 @@ namespace CityWeather
         #endregion
 
         #region Создание Параллелепипедов
-        private void CreateCube()
-        {
-            Model m = new Model(Color.Red);
-
-            int xl = 250, xu = 450;
-            int yl = 200, yu = 450;
-            int zl = 200, zu = 400;
-
-            m.AddVertex(new Point3D(xl, yu, zu));
-            m.AddVertex(new Point3D(xu, yu, zu));
-            m.AddVertex(new Point3D(xu, yl, zu));
-            m.AddVertex(new Point3D(xl, yl, zu));
-            m.AddVertex(new Point3D(xl, yu, zl));
-            m.AddVertex(new Point3D(xu, yu, zl));
-            m.AddVertex(new Point3D(xu, yl, zl));
-            m.AddVertex(new Point3D(xl, yl, zl));
-            
-            m.CreatePolygon(true, 0, 1, 2, 3);
-            m.CreatePolygon(true, 4, 5, 6, 7);
-            m.CreatePolygon(true, 0, 4, 7, 3);
-            m.CreatePolygon(true, 1, 5, 6, 2);
-            m.CreatePolygon(true, 0, 1, 5, 4);
-            m.CreatePolygon(true, 3, 2, 6, 7);
-
-            scene.Add(m);
-        }
-
-        private void CreateCubeTurned(Color color, int xcoef, int ycoef, int x, int y, int h, int zl = 100)
+        private void CreateCube(Color color, int xCent, int dx, int zCent, int dz, int height)
         {
             Model m = new Model(color);
 
-            int xl = x, xu = x + 100;
-            int yl = y, yu = y - h;
-            int zu = zl + 100;
-
-            m.AddVertex(new Point3D(xl, yu, zu));
-            m.AddVertex(new Point3D(xu, yu, zu));
-            m.AddVertex(new Point3D(xu, yl, zu));
-            m.AddVertex(new Point3D(xl, yl, zu));
+            //передняя
+            m.AddVertex(new Point3D(xCent - dx, ground, zCent + dz)); // левая нижняя
+            m.AddVertex(new Point3D(xCent + dx, ground, zCent + dz)); // правая нижняя
+            m.AddVertex(new Point3D(xCent + dx, ground - height, zCent + dz)); // правая верхняя
+            m.AddVertex(new Point3D(xCent - dx, ground - height, zCent + dz)); // левая верхняя
 
             // задняя
-            m.AddVertex(new Point3D(xl + xcoef, yu + ycoef, zl));
-            m.AddVertex(new Point3D(xu + xcoef, yu + ycoef, zl));
-            m.AddVertex(new Point3D(xu + xcoef, yl + ycoef, zl));
-            m.AddVertex(new Point3D(xl + xcoef, yl + ycoef, zl));
+            m.AddVertex(new Point3D(xCent - dx, ground, zCent - dz)); // левая нижняя
+            m.AddVertex(new Point3D(xCent + dx, ground, zCent - dz)); // правая нижняя
+            m.AddVertex(new Point3D(xCent + dx, ground - height, zCent - dz)); // правая верхняя
+            m.AddVertex(new Point3D(xCent - dx, ground - height, zCent - dz)); // левая верхняя
 
             m.CreatePolygon(true, 3, 2, 6, 7); // верхняя
             m.CreatePolygon(true, 0, 1, 2, 3); // передняя
@@ -217,7 +188,20 @@ namespace CityWeather
             m.CreatePolygon(true, 4, 5, 6, 7); // задняя
             m.CreatePolygon(true, 1, 5, 6, 2); // правая
             m.CreatePolygon(true, 0, 1, 5, 4); // нижняя
-                        
+
+            scene.Add(m);
+        }
+
+        private void CreateGround(Color color, int xCent, int dx, int zCent, int dz)
+        {
+            Model m = new Model(color);
+
+            m.AddVertex(new Point3D(xCent + dx, ground, zCent + dz));
+            m.AddVertex(new Point3D(xCent - dx, ground, zCent + dz));
+            m.AddVertex(new Point3D(xCent - dx, ground, zCent - dz));
+            m.AddVertex(new Point3D(xCent + dx, ground, zCent - dz));
+
+            m.CreatePolygon(true, 0, 1, 2, 3);
 
             scene.Add(m);
         }
@@ -244,6 +228,27 @@ namespace CityWeather
             //повернуть солнышко
             UpdScene(current);
         }
+        
+        private void buttonUp_Click(object sender, EventArgs e)
+        {
+            foreach (Model m in scene)
+            {
+                m.TransformModel(10, 0, 0);
+            }
+            //повернуть солнышко
+            UpdScene(current);
+        }
+
+        private void buttonDown_Click(object sender, EventArgs e)
+        {
+            foreach (Model m in scene)
+            {
+                m.TransformModel(-10, 0, 0);
+            }
+            //повернуть солнышко
+            UpdScene(current);
+        }
+
 
         #endregion
 

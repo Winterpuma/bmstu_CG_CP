@@ -49,10 +49,8 @@
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBoxSH = new System.Windows.Forms.TextBox();
-            this.textBoxSDy = new System.Windows.Forms.TextBox();
             this.textBoxSDx = new System.Windows.Forms.TextBox();
             this.textBoxSZ = new System.Windows.Forms.TextBox();
-            this.textBoxSY = new System.Windows.Forms.TextBox();
             this.textBoxSX = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -69,6 +67,7 @@
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
+            this.textBoxSDz = new System.Windows.Forms.TextBox();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -270,10 +269,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.textBoxSH);
-            this.groupBox3.Controls.Add(this.textBoxSDy);
+            this.groupBox3.Controls.Add(this.textBoxSDz);
             this.groupBox3.Controls.Add(this.textBoxSDx);
             this.groupBox3.Controls.Add(this.textBoxSZ);
-            this.groupBox3.Controls.Add(this.textBoxSY);
             this.groupBox3.Controls.Add(this.textBoxSX);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label10);
@@ -285,30 +283,22 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(1129, 44);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(163, 133);
+            this.groupBox3.Size = new System.Drawing.Size(211, 133);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Сцена";
             // 
             // textBoxSH
             // 
-            this.textBoxSH.Location = new System.Drawing.Point(108, 75);
+            this.textBoxSH.Location = new System.Drawing.Point(77, 78);
             this.textBoxSH.Name = "textBoxSH";
             this.textBoxSH.Size = new System.Drawing.Size(38, 23);
             this.textBoxSH.TabIndex = 26;
             this.textBoxSH.Text = "50";
             // 
-            // textBoxSDy
-            // 
-            this.textBoxSDy.Location = new System.Drawing.Point(108, 47);
-            this.textBoxSDy.Name = "textBoxSDy";
-            this.textBoxSDy.Size = new System.Drawing.Size(38, 23);
-            this.textBoxSDy.TabIndex = 25;
-            this.textBoxSDy.Text = "-50";
-            // 
             // textBoxSDx
             // 
-            this.textBoxSDx.Location = new System.Drawing.Point(108, 19);
+            this.textBoxSDx.Location = new System.Drawing.Point(147, 19);
             this.textBoxSDx.Name = "textBoxSDx";
             this.textBoxSDx.Size = new System.Drawing.Size(38, 23);
             this.textBoxSDx.TabIndex = 24;
@@ -316,23 +306,15 @@
             // 
             // textBoxSZ
             // 
-            this.textBoxSZ.Location = new System.Drawing.Point(32, 75);
+            this.textBoxSZ.Location = new System.Drawing.Point(77, 51);
             this.textBoxSZ.Name = "textBoxSZ";
             this.textBoxSZ.Size = new System.Drawing.Size(38, 23);
             this.textBoxSZ.TabIndex = 23;
             this.textBoxSZ.Text = "100";
             // 
-            // textBoxSY
-            // 
-            this.textBoxSY.Location = new System.Drawing.Point(32, 47);
-            this.textBoxSY.Name = "textBoxSY";
-            this.textBoxSY.Size = new System.Drawing.Size(38, 23);
-            this.textBoxSY.TabIndex = 22;
-            this.textBoxSY.Text = "300";
-            // 
             // textBoxSX
             // 
-            this.textBoxSX.Location = new System.Drawing.Point(32, 19);
+            this.textBoxSX.Location = new System.Drawing.Point(77, 22);
             this.textBoxSX.Name = "textBoxSX";
             this.textBoxSX.Size = new System.Drawing.Size(38, 23);
             this.textBoxSX.TabIndex = 21;
@@ -341,34 +323,34 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 78);
+            this.label11.Location = new System.Drawing.Point(9, 51);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(19, 17);
+            this.label11.Size = new System.Drawing.Size(65, 17);
             this.label11.TabIndex = 20;
-            this.label11.Text = "z:";
+            this.label11.Text = "Центр z:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(82, 78);
+            this.label10.Location = new System.Drawing.Point(13, 81);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(20, 17);
+            this.label10.Size = new System.Drawing.Size(61, 17);
             this.label10.TabIndex = 19;
-            this.label10.Text = "h:";
+            this.label10.Text = "Высота:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(82, 51);
+            this.label9.Location = new System.Drawing.Point(121, 51);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(27, 17);
             this.label9.TabIndex = 18;
-            this.label9.Text = "dy:";
+            this.label9.Text = "dz:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(82, 26);
+            this.label8.Location = new System.Drawing.Point(121, 26);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 17);
             this.label8.TabIndex = 17;
@@ -379,18 +361,17 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(9, 26);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(18, 17);
+            this.label7.Size = new System.Drawing.Size(64, 17);
             this.label7.TabIndex = 16;
-            this.label7.Text = "x:";
+            this.label7.Text = "Центр х:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 54);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 17);
+            this.label6.Size = new System.Drawing.Size(0, 17);
             this.label6.TabIndex = 15;
-            this.label6.Text = "y:";
             // 
             // buttonAddBuilding
             // 
@@ -445,6 +426,7 @@
             this.buttonUp.TabIndex = 18;
             this.buttonUp.Text = "button1";
             this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
             // 
             // buttonLeft
             // 
@@ -464,6 +446,7 @@
             this.buttonDown.TabIndex = 20;
             this.buttonDown.Text = "button6";
             this.buttonDown.UseVisualStyleBackColor = true;
+            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
             // 
             // buttonRight
             // 
@@ -474,6 +457,14 @@
             this.buttonRight.Text = "button7";
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
+            // 
+            // textBoxSDz
+            // 
+            this.textBoxSDz.Location = new System.Drawing.Point(147, 47);
+            this.textBoxSDz.Name = "textBoxSDz";
+            this.textBoxSDz.Size = new System.Drawing.Size(38, 23);
+            this.textBoxSDz.TabIndex = 25;
+            this.textBoxSDz.Text = "-50";
             // 
             // Form1
             // 
@@ -532,10 +523,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox textBoxSH;
-        private System.Windows.Forms.TextBox textBoxSDy;
         private System.Windows.Forms.TextBox textBoxSDx;
         private System.Windows.Forms.TextBox textBoxSZ;
-        private System.Windows.Forms.TextBox textBoxSY;
         private System.Windows.Forms.TextBox textBoxSX;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
@@ -552,6 +541,7 @@
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonRight;
+        private System.Windows.Forms.TextBox textBoxSDz;
     }
 }
 
