@@ -12,6 +12,7 @@ namespace CityWeather
     {
         List<Point3D> vertices;
         public List<Polygon> polygons;
+        private List<int[]> indexes;
         private Color basicColor = Color.Black;
         
         public Model(Color color)
@@ -19,6 +20,7 @@ namespace CityWeather
             basicColor = color;
             vertices = new List<Point3D>();
             polygons = new List<Polygon>();
+            indexes = new List<int[]>();
         }
 
         public void AddVertex(Point3D vertex)
@@ -26,14 +28,32 @@ namespace CityWeather
             vertices.Add(vertex);
         }
 
-        public void CreatePolygon(params int[] indexes)
+        public void CreatePolygon(bool changeInd, params int[] indexes)
         {
+            if (changeInd)
+                this.indexes.Add(indexes);
+
             List<Point3D> verticesPolygon = new List<Point3D>();
             foreach (int i in indexes)
             {
                 verticesPolygon.Add(vertices[i]);
             }
             polygons.Add(new Polygon(verticesPolygon, basicColor));
+        }
+
+        public void TransformModel(double tetax, double tetay, double tetaz)
+        {
+            foreach (Point3D v in vertices)
+            {
+                Transformation.transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
+                polygons.Clear();
+            }
+
+            foreach (int[] i in indexes)
+            {
+                CreatePolygon(false, i);
+            }
+
         }
     }
         

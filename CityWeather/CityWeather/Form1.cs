@@ -11,6 +11,7 @@ using System.Timers;
 
 namespace CityWeather
 {
+
     public partial class Form1 : Form
     {
         Bitmap img;
@@ -23,6 +24,7 @@ namespace CityWeather
         public Form1()
         {
             InitializeComponent();
+            Transformation.SetSize(canvas.Width, canvas.Height);
 
             img = new Bitmap(canvas.Width, canvas.Height);
             g = canvas.CreateGraphics();
@@ -78,12 +80,13 @@ namespace CityWeather
         #region Сцена
         private void CreateScene()
         {
-            //createCube();
+            //CreateCube();
             CreateCubeTurned(Color.Red, -30, -80, 100, 500, 100);
             CreateCubeTurned(Color.Red, -50, -80, 400, 500, 300);
 
             CreateCubeTurned(Color.Orange, 30, -80, 600, 500, 400);
             CreateCubeTurned(Color.Orange, 30, -80, 800, 500, 350);
+            
         }
 
         private void UpdScene(LightSource sun)
@@ -137,6 +140,7 @@ namespace CityWeather
                 System.Threading.Thread.Sleep(delay);
             }*/
         }
+        
 
         private void StartRain(int intensity, Vector direction)
         {
@@ -154,7 +158,9 @@ namespace CityWeather
         #region Туман
         private void buttonFog_Click(object sender, EventArgs e)
         {
-            canvas.Image = Fog.AddFog(zbuf, 100);
+            int far = Convert.ToInt32(textBoxfar.Text);
+            int close = Convert.ToInt32(textBoxClose.Text);
+            canvas.Image = Fog.AddFog(zbuf, far, close);
         }
         #endregion
 
@@ -163,9 +169,9 @@ namespace CityWeather
         {
             Model m = new Model(Color.Red);
 
-            int xl = 150, xu = 250;
-            int yl = 100, yu = 250;
-            int zl = 100, zu = 200;
+            int xl = 250, xu = 450;
+            int yl = 200, yu = 450;
+            int zl = 200, zu = 400;
 
             m.AddVertex(new Point3D(xl, yu, zu));
             m.AddVertex(new Point3D(xu, yu, zu));
@@ -176,12 +182,12 @@ namespace CityWeather
             m.AddVertex(new Point3D(xu, yl, zl));
             m.AddVertex(new Point3D(xl, yl, zl));
             
-            m.CreatePolygon(0, 1, 2, 3);
-            m.CreatePolygon(4, 5, 6, 7);
-            m.CreatePolygon(0, 4, 7, 3);
-            m.CreatePolygon(1, 5, 6, 2);
-            m.CreatePolygon(0, 1, 5, 4);
-            m.CreatePolygon(3, 2, 6, 7);
+            m.CreatePolygon(true, 0, 1, 2, 3);
+            m.CreatePolygon(true, 4, 5, 6, 7);
+            m.CreatePolygon(true, 0, 4, 7, 3);
+            m.CreatePolygon(true, 1, 5, 6, 2);
+            m.CreatePolygon(true, 0, 1, 5, 4);
+            m.CreatePolygon(true, 3, 2, 6, 7);
 
             scene.Add(m);
         }
@@ -205,17 +211,41 @@ namespace CityWeather
             m.AddVertex(new Point3D(xu + xcoef, yl + ycoef, zl));
             m.AddVertex(new Point3D(xl + xcoef, yl + ycoef, zl));
 
-            m.CreatePolygon(3, 2, 6, 7); // верхняя
-            m.CreatePolygon(0, 1, 2, 3); // передняя
-            m.CreatePolygon(0, 4, 7, 3); // левая
-            m.CreatePolygon(4, 5, 6, 7); // задняя
-            m.CreatePolygon(1, 5, 6, 2); // правая
-            m.CreatePolygon(0, 1, 5, 4); // нижняя
-            
+            m.CreatePolygon(true, 3, 2, 6, 7); // верхняя
+            m.CreatePolygon(true, 0, 1, 2, 3); // передняя
+            m.CreatePolygon(true, 0, 4, 7, 3); // левая
+            m.CreatePolygon(true, 4, 5, 6, 7); // задняя
+            m.CreatePolygon(true, 1, 5, 6, 2); // правая
+            m.CreatePolygon(true, 0, 1, 5, 4); // нижняя
+                        
 
             scene.Add(m);
         }
         #endregion
-               
+
+        #region Повороты
+        private void buttonLeft_Click(object sender, EventArgs e)
+        {
+            foreach (Model m in scene)
+            {
+                m.TransformModel(0, -10, 0);
+            }
+            //повернуть солнышко
+            UpdScene(current);
+
+        }
+
+        private void buttonRight_Click(object sender, EventArgs e)
+        {
+            foreach (Model m in scene)
+            {
+                m.TransformModel(0, 10, 0);
+            }
+            //повернуть солнышко
+            UpdScene(current);
+        }
+
+        #endregion
+
     }
 }

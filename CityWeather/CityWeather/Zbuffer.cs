@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace CityWeather
 {
+
     class Zbuffer
     {
         private Bitmap res;
@@ -24,7 +25,12 @@ namespace CityWeather
             Zbuf = new int[size.Height][];
 
             for (int i = 0; i < size.Height; i++)
-                Zbuf[i] = new int[size.Width]; // нули???
+            {
+                Zbuf[i] = new int[size.Width];
+                for (int j = 0; j < size.Width; j++)
+                    Zbuf[i][j] = -10000;
+            }
+
             
             foreach (Model m in models)
             {

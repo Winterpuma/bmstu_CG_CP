@@ -63,6 +63,12 @@
             this.buttonAddBuilding = new System.Windows.Forms.Button();
             this.buttonFog = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
+            this.textBoxfar = new System.Windows.Forms.TextBox();
+            this.textBoxClose = new System.Windows.Forms.TextBox();
+            this.buttonUp = new System.Windows.Forms.Button();
+            this.buttonLeft = new System.Windows.Forms.Button();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonRight = new System.Windows.Forms.Button();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -398,7 +404,7 @@
             // 
             // buttonFog
             // 
-            this.buttonFog.Location = new System.Drawing.Point(1129, 570);
+            this.buttonFog.Location = new System.Drawing.Point(1265, 569);
             this.buttonFog.Name = "buttonFog";
             this.buttonFog.Size = new System.Drawing.Size(75, 23);
             this.buttonFog.TabIndex = 15;
@@ -415,11 +421,71 @@
             this.label12.TabIndex = 16;
             this.label12.Text = "label12";
             // 
+            // textBoxfar
+            // 
+            this.textBoxfar.Location = new System.Drawing.Point(1129, 572);
+            this.textBoxfar.Name = "textBoxfar";
+            this.textBoxfar.Size = new System.Drawing.Size(50, 20);
+            this.textBoxfar.TabIndex = 15;
+            this.textBoxfar.Text = "100";
+            // 
+            // textBoxClose
+            // 
+            this.textBoxClose.Location = new System.Drawing.Point(1193, 571);
+            this.textBoxClose.Name = "textBoxClose";
+            this.textBoxClose.Size = new System.Drawing.Size(54, 20);
+            this.textBoxClose.TabIndex = 17;
+            this.textBoxClose.Text = "300";
+            // 
+            // buttonUp
+            // 
+            this.buttonUp.Location = new System.Drawing.Point(1355, 148);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(75, 23);
+            this.buttonUp.TabIndex = 18;
+            this.buttonUp.Text = "button1";
+            this.buttonUp.UseVisualStyleBackColor = true;
+            // 
+            // buttonLeft
+            // 
+            this.buttonLeft.Location = new System.Drawing.Point(1307, 183);
+            this.buttonLeft.Name = "buttonLeft";
+            this.buttonLeft.Size = new System.Drawing.Size(75, 23);
+            this.buttonLeft.TabIndex = 19;
+            this.buttonLeft.Text = "button5";
+            this.buttonLeft.UseVisualStyleBackColor = true;
+            this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
+            // 
+            // buttonDown
+            // 
+            this.buttonDown.Location = new System.Drawing.Point(1355, 226);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(75, 23);
+            this.buttonDown.TabIndex = 20;
+            this.buttonDown.Text = "button6";
+            this.buttonDown.UseVisualStyleBackColor = true;
+            // 
+            // buttonRight
+            // 
+            this.buttonRight.Location = new System.Drawing.Point(1400, 183);
+            this.buttonRight.Name = "buttonRight";
+            this.buttonRight.Size = new System.Drawing.Size(75, 23);
+            this.buttonRight.TabIndex = 21;
+            this.buttonRight.Text = "button7";
+            this.buttonRight.UseVisualStyleBackColor = true;
+            this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1304, 617);
+            this.ClientSize = new System.Drawing.Size(1472, 617);
+            this.Controls.Add(this.buttonRight);
+            this.Controls.Add(this.buttonDown);
+            this.Controls.Add(this.buttonLeft);
+            this.Controls.Add(this.buttonUp);
+            this.Controls.Add(this.textBoxClose);
+            this.Controls.Add(this.textBoxfar);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.buttonFog);
             this.Controls.Add(this.groupBox3);
@@ -480,6 +546,12 @@
         private System.Windows.Forms.Button buttonAddBuilding;
         private System.Windows.Forms.Button buttonFog;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBoxfar;
+        private System.Windows.Forms.TextBox textBoxClose;
+        private System.Windows.Forms.Button buttonUp;
+        private System.Windows.Forms.Button buttonLeft;
+        private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.Button buttonRight;
     }
 }
 
