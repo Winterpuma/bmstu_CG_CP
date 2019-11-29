@@ -94,22 +94,23 @@ namespace CityWeather
         private void UpdScene(LightSource sun)
         {
             int dx = 1000, dy = 1000;
-            int tettay = -90, tettaz = 0;
+            int tettay = -90, tettaz = 0; //их нужно найти еще
 
             zbuf = new Zbuffer(scene, canvas.Size, sun);
-            foreach (Model m in scene)
+            /*foreach (Model m in scene)
             {
                 m.TransformModel(0, tettay, tettaz, true, dx, dy);
             }
             
             Zbuffer visFromSun = new Zbuffer(scene, new Size(canvas.Width + 2000, canvas.Height + 2000), sun);
+            */
             //canvas.Image = visFromSun.GetImage();
-            canvas.Image = zbuf.AddShadows(canvas.Size, visFromSun, -90, 0, dx);
+            canvas.Image = zbuf.AddShadows(tettay, tettaz);
 
-            foreach (Model m in scene)
+            /*foreach (Model m in scene)
             {
                 m.TransformModel(0, -tettay, -tettaz, false, -dx, -dy);
-            }
+            }*/
 
             //canvas.Image = zbuf.GetImage();
             current = sun;

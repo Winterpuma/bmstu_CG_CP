@@ -12,6 +12,10 @@ namespace CityWeather
     {
         private Bitmap res;
         private int[][] Zbuf;
+        private int[][] ZbufFromSun;
+        LightSource sun;
+        Size size;
+
         private static readonly int zBackground = -10000;
         
 
@@ -24,25 +28,39 @@ namespace CityWeather
         public Zbuffer(List<Model> models, Size size, LightSource sun)
         {
             res = new Bitmap(size.Width, size.Height);
-            Zbuf = new int[size.Height][];
-
-            for (int i = 0; i < size.Height; i++)
-            {
-                Zbuf[i] = new int[size.Width];
-                for (int j = 0; j < size.Width; j++)
-                    Zbuf[i][j] = zBackground;
-            }
             
+            InitBuf(ref Zbuf, size.Width, size.Height, zBackground);
+            InitBuf(ref ZbufFromSun, size.Width, size.Height, zBackground);
+
+            this.sun = sun;
+            this.size = size;
             foreach (Model m in models)
             {
-                ProcessModel(m, sun);
+                ProcessModel(m);
             }
         }
 
-        public Bitmap AddShadows(Size size, Zbuffer visibleFromSun, double tettay, double tettaz, int dc = 0)
+        /// <summary>
+        /// Инициализация буффера, заполнение начальным значением
+        /// </summary>
+        /// <param name="buf">Буфер</param>
+        /// <param name="w">Ширина буфера</param>
+        /// <param name="h">Высота буфера</param>
+        /// <param name="value">Начальное значение</param>
+        private void InitBuf(ref int[][] buf, int w, int h, int value)
+        {
+            buf = new int[h][];
+            for (int i = 0; i < h; i++)
+            {
+                buf[i] = new int[w];
+                for (int j = 0; j < w; j++)
+                    buf[i][j] = value;
+            }
+        }
+
+        public Bitmap AddShadows(double tettay, double tettaz)
         {
             Bitmap hm = new Bitmap(size.Width, size.Height);
-            int[][] lightParts = visibleFromSun.GetZbuf();
 
             for (int i = 0; i < size.Width; i++)
             {
@@ -52,13 +70,10 @@ namespace CityWeather
                     if (z != zBackground) 
                     {
                         Point3D newCoord = Transformation.Transform(i, j, z, 0, tettay, tettaz);
-                        newCoord.x += dc;
-                        newCoord.y += dc;
-
-                        //если выходит за пределы?????????
-                        if (newCoord.x < 0 || newCoord.y < 0)
+                        
+                        if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
                             continue;
-                        if (lightParts[newCoord.x][newCoord.y] > newCoord.z) // текущая точка невидима из источника(если z текущей точки дальше, чем z видимой)
+                        if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 0.5) // текущая точка невидима из источника(если z текущей точки дальше, чем z видимой)
                         {
                             hm.SetPixel(i, j, Color.Black); // TODO: смешивать
                         }
@@ -73,6 +88,7 @@ namespace CityWeather
             return hm;
         }
 
+        #region Получить данные извне
         public Bitmap GetImage()
         {
             return res;
@@ -87,16 +103,18 @@ namespace CityWeather
         {
             return Zbuf[y][x];
         }
+
         public int GetZ(Point p)
         {
             return Zbuf[p.Y][p.X];
         }
+        #endregion
 
         /// <summary>
         /// Обрабока одной модели для занесения ее в буфер
         /// </summary>
         /// <param name="m">Модель</param>
-        private void ProcessModel(Model m, LightSource sun)
+        private void ProcessModel(Model m)
         {
             Color draw;
             foreach (Polygon polygon in m.polygons)
@@ -124,6 +142,14 @@ namespace CityWeather
                 Zbuf[point.y][point.x] = point.z;
                 res.SetPixel(point.x, point.y, color);
             }
+            Point3D turned = Transformation.Transform(point, 0, -90, 0); // считать углы поворота относительно солнца! TODO
+            if (turned.x < 0 || turned.x >= ZbufFromSun[0].Length || turned.y < 0 || turned.y >= ZbufFromSun.Length) 
+                return;
+            if (turned.z > ZbufFromSun[turned.y][turned.x])
+            {
+                ZbufFromSun[turned.y][turned.x] = turned.z; // значит прошлая точка была в тени, если была
+            }
+
         }
 
     }
