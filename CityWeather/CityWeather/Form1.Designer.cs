@@ -49,6 +49,7 @@
             this.canvas = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBoxSH = new System.Windows.Forms.TextBox();
+            this.textBoxSDz = new System.Windows.Forms.TextBox();
             this.textBoxSDx = new System.Windows.Forms.TextBox();
             this.textBoxSZ = new System.Windows.Forms.TextBox();
             this.textBoxSX = new System.Windows.Forms.TextBox();
@@ -67,7 +68,6 @@
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
-            this.textBoxSDz = new System.Windows.Forms.TextBox();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -296,6 +296,14 @@
             this.textBoxSH.TabIndex = 26;
             this.textBoxSH.Text = "50";
             // 
+            // textBoxSDz
+            // 
+            this.textBoxSDz.Location = new System.Drawing.Point(147, 47);
+            this.textBoxSDz.Name = "textBoxSDz";
+            this.textBoxSDz.Size = new System.Drawing.Size(38, 23);
+            this.textBoxSDz.TabIndex = 25;
+            this.textBoxSDz.Text = "-50";
+            // 
             // textBoxSDx
             // 
             this.textBoxSDx.Location = new System.Drawing.Point(147, 19);
@@ -457,14 +465,6 @@
             this.buttonRight.Text = "button7";
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
-            // 
-            // textBoxSDz
-            // 
-            this.textBoxSDz.Location = new System.Drawing.Point(147, 47);
-            this.textBoxSDz.Name = "textBoxSDz";
-            this.textBoxSDz.Size = new System.Drawing.Size(38, 23);
-            this.textBoxSDz.TabIndex = 25;
-            this.textBoxSDz.Text = "-50";
             // 
             // Form1
             // 

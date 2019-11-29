@@ -48,7 +48,7 @@ namespace CityWeather
             y = centerY + Math.Cos(tetaz) * (y - centerY) + Math.Sin(tetaz) * (buf - centerX);
         }
 
-        public static void transform(ref int x, ref int y, ref int z, double tetax, double tetay, double tetaz)
+        public static void Transform(ref int x, ref int y, ref int z, double tetax, double tetay, double tetaz)
         {
             double x_tmp = x;
             double y_tmp = y;
@@ -60,7 +60,37 @@ namespace CityWeather
             x = (int)x_tmp;
             y = (int)y_tmp;
             z = (int)z_tmp;
+        }
 
+        public static Point3D Transform(int x, int y, int z, double tetax, double tetay, double tetaz)
+        {
+            double x_tmp = x;
+            double y_tmp = y;
+            double z_tmp = z;
+            rotate_x(ref y_tmp, ref z_tmp, tetax);
+            rotate_y(ref x_tmp, ref z_tmp, tetay);
+            rotate_z(ref x_tmp, ref y_tmp, tetaz);
+
+            return new Point3D((int)x_tmp, (int)y_tmp, (int)z_tmp);
+        }
+
+        public static Point3D Transform(Point3D p, double tetax, double tetay, double tetaz)
+        {
+            double x_tmp = p.x;
+            double y_tmp = p.y;
+            double z_tmp = p.z;
+            rotate_x(ref y_tmp, ref z_tmp, tetax);
+            rotate_y(ref x_tmp, ref z_tmp, tetay);
+            rotate_z(ref x_tmp, ref y_tmp, tetaz);
+
+            return new Point3D((int)x_tmp, (int)y_tmp, (int)z_tmp);
+        }
+
+        public static void Move(ref int x, ref int y, ref int z, int dx, int dy, int dz)
+        {
+            x += dx;
+            y += dy;
+            z += dz;
         }
     }
 }

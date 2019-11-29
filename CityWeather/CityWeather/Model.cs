@@ -41,11 +41,18 @@ namespace CityWeather
             polygons.Add(new Polygon(verticesPolygon, basicColor));
         }
 
-        public void TransformModel(double tetax, double tetay, double tetaz)
+        public void TransformModel(double tetax, double tetay, double tetaz, bool firstOper = false, int dx = 0, int dy = 0, int dz = 0)
         {
             foreach (Point3D v in vertices)
             {
-                Transformation.transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
+                if (!firstOper)
+                    Transformation.Move(ref v.x, ref v.y, ref v.z, dx, dy, dz);
+
+                Transformation.Transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
+
+                if (firstOper)
+                    Transformation.Move(ref v.x, ref v.y, ref v.z, dx, dy, dz);
+
                 polygons.Clear();
             }
 

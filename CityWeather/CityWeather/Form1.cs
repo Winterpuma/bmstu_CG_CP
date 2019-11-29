@@ -85,16 +85,33 @@ namespace CityWeather
             CreateCube(Color.DarkOrange, 300, 100, 0, 150, 300);
             CreateCube(Color.Red, 750, 150, 100, 100, 100);
 
-            foreach (Model m in scene)
+            /*foreach (Model m in scene)
             {
                 m.TransformModel(-20, -30, 0);
-            }
+            }*/
         }
 
         private void UpdScene(LightSource sun)
         {
+            int dx = 1000, dy = 1000;
+            int tettay = -90, tettaz = 0;
+
             zbuf = new Zbuffer(scene, canvas.Size, sun);
-            canvas.Image = zbuf.GetImage();
+            foreach (Model m in scene)
+            {
+                m.TransformModel(0, tettay, tettaz, true, dx, dy);
+            }
+            
+            Zbuffer visFromSun = new Zbuffer(scene, new Size(canvas.Width + 2000, canvas.Height + 2000), sun);
+            //canvas.Image = visFromSun.GetImage();
+            canvas.Image = zbuf.AddShadows(canvas.Size, visFromSun, -90, 0, dx);
+
+            foreach (Model m in scene)
+            {
+                m.TransformModel(0, -tettay, -tettaz, false, -dx, -dy);
+            }
+
+            //canvas.Image = zbuf.GetImage();
             current = sun;
         }
 
@@ -191,7 +208,7 @@ namespace CityWeather
 
             scene.Add(m);
         }
-
+        
         private void CreateGround(Color color, int xCent, int dx, int zCent, int dz)
         {
             Model m = new Model(color);
