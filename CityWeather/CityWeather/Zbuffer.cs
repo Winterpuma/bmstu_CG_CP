@@ -45,6 +45,9 @@ namespace CityWeather
             }
         }
 
+        /// <summary>
+        /// Нахождение углов между взглядом и источником света
+        /// </summary>
         private void InitTeta()
         {
             tettax = Vector.GetAngleXBetween(viewDir, sun.direction);
@@ -85,13 +88,15 @@ namespace CityWeather
                         
                         if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
                             continue;
-                        if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 0.5) // текущая точка невидима из источника(если z текущей точки дальше, чем z видимой)
+
+                        Color curPixColor = res.GetPixel(i, j);
+                        if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 0.5) // текущая точка невидима из источника света
                         {
-                            hm.SetPixel(i, j, Color.Black); // TODO: смешивать
+                            hm.SetPixel(i, j, Colors.Mix(Color.Black, curPixColor, 0.25f)); 
                         }
                         else
                         {
-                            hm.SetPixel(i, j, res.GetPixel(i, j));
+                            hm.SetPixel(i, j, curPixColor);
                         }
                     }
                 }

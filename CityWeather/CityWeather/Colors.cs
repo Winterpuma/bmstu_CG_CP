@@ -9,9 +9,12 @@ namespace CityWeather
 {
     class Colors
     {
-        public Color c;
-
-        public static Color mix(Color a, Color b, float aPers)
+        /// <summary>
+        /// Смешивание цветов в разных пропорциях
+        /// </summary>
+        /// <param name="aPers">Коэффициент влияния цвета a</param>
+        /// <returns></returns>
+        public static Color Mix(Color a, Color b, float aPers)
         {
             aPers = Math.Min(aPers, 1);
             float bPers = 1 - aPers;
@@ -21,10 +24,6 @@ namespace CityWeather
 
             return Color.FromArgb(red, green, blue);
         }
-
-        /* To get real color:
-         * https://en.wikipedia.org/wiki/CIELAB_color_space
-         * https://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1
-         */
+        
     }
 }

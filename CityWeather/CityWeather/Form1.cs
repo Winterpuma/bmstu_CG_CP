@@ -17,8 +17,8 @@ namespace CityWeather
         Bitmap img;
         Graphics g;
         List<Model> scene;
-        LightSource sun1, sun2, sun3, sun4, sun5, current;
-        Vector ViewDirection = new Vector(0, 0, -1);
+        LightSource sun1, sun2, sun3, sun4, sun5, currentSun;
+        Vector viewDirection = new Vector(0, 0, -1);
         Zbuffer zbuf;
         ParticleSystem rain;
         static int ground = 400;
@@ -35,7 +35,7 @@ namespace CityWeather
             CreateScene();
             SetSun();
 
-            UpdScene(sun1);
+            UpdScene(sun3);
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
@@ -82,21 +82,26 @@ namespace CityWeather
         #region Сцена
         private void CreateScene()
         {
-            CreateGround(Color.Green, canvas.Width /2, 400 , canvas.Width / 2, 1000);
+            CreateGround(Color.Green, canvas.Width /2, 400 , 0, 500);
             CreateCube(Color.DarkOrange, 300, 100, 0, 150, 300);
             CreateCube(Color.Red, 750, 150, 100, 100, 100);
+            TurnSceneX(-20);
+        }
 
-            /*foreach (Model m in scene)
+        private void TurnSceneX(int x)
+        {
+            foreach (Model m in scene)
             {
-                m.TransformModel(-20, -30, 0);
-            }*/
+                m.TransformModel(x, 0, 0);
+            }
         }
 
         private void UpdScene(LightSource sun)
         {
-            zbuf = new Zbuffer(scene, canvas.Size, sun, ViewDirection);
-            canvas.Image = zbuf.AddShadows();//zbuf.GetImage();
-            current = sun;
+            zbuf = new Zbuffer(scene, canvas.Size, sun, viewDirection);
+            //canvas.Image = zbuf.AddShadows();
+            canvas.Image = zbuf.GetImage();
+            currentSun = sun;
         }
 
         private void buttonAddBuilding_Click(object sender, EventArgs e)
@@ -107,7 +112,7 @@ namespace CityWeather
             int dz = Convert.ToInt32(textBoxSDz.Text);
             int h = Convert.ToInt32(textBoxSH.Text);
             CreateCube(Color.Black, x, dx, z, dz, h);
-            UpdScene(current);
+            UpdScene(currentSun);
         }
         #endregion
 
@@ -183,12 +188,12 @@ namespace CityWeather
             m.AddVertex(new Point3D(xCent + dx, ground - height, zCent - dz)); // правая верхняя
             m.AddVertex(new Point3D(xCent - dx, ground - height, zCent - dz)); // левая верхняя
 
-            m.CreatePolygon(true, 3, 2, 6, 7); // верхняя
-            m.CreatePolygon(true, 0, 1, 2, 3); // передняя
-            m.CreatePolygon(true, 0, 4, 7, 3); // левая
-            m.CreatePolygon(true, 4, 5, 6, 7); // задняя
-            m.CreatePolygon(true, 1, 5, 6, 2); // правая
-            m.CreatePolygon(true, 0, 1, 5, 4); // нижняя
+            m.CreatePolygon(3, 2, 6, 7); // верхняя
+            m.CreatePolygon(0, 1, 2, 3); // передняя
+            m.CreatePolygon(0, 4, 7, 3); // левая
+            m.CreatePolygon(4, 5, 6, 7); // задняя
+            m.CreatePolygon(1, 5, 6, 2); // правая
+            m.CreatePolygon(0, 1, 5, 4); // нижняя
 
             scene.Add(m);
         }
@@ -202,7 +207,7 @@ namespace CityWeather
             m.AddVertex(new Point3D(xCent - dx, ground, zCent - dz));
             m.AddVertex(new Point3D(xCent + dx, ground, zCent - dz));
 
-            m.CreatePolygon(true, 0, 1, 2, 3);
+            m.CreatePolygon(0, 1, 2, 3);
 
             scene.Add(m);
         }
@@ -211,46 +216,28 @@ namespace CityWeather
         #region Повороты
         private void buttonLeft_Click(object sender, EventArgs e)
         {
+            TurnSceneX(20);
+            viewDirection.RotateVectorY(-45);
             foreach (Model m in scene)
             {
-                m.TransformModel(0, -10, 0);
+                m.TransformModel(0, -45, 0);
             }
-            //повернуть солнышко
-            UpdScene(current);
+            TurnSceneX(-20);
+            UpdScene(currentSun);
 
         }
 
         private void buttonRight_Click(object sender, EventArgs e)
         {
+            TurnSceneX(20);
+            viewDirection.RotateVectorY(-40);
             foreach (Model m in scene)
             {
-                m.TransformModel(0, 10, 0);
+                m.TransformModel(0, 45, 0);
             }
-            //повернуть солнышко
-            UpdScene(current);
+            TurnSceneX(-20);
+            UpdScene(currentSun);
         }
-        
-        private void buttonUp_Click(object sender, EventArgs e)
-        {
-            foreach (Model m in scene)
-            {
-                m.TransformModel(10, 0, 0);
-            }
-            //повернуть солнышко
-            UpdScene(current);
-        }
-
-        private void buttonDown_Click(object sender, EventArgs e)
-        {
-            foreach (Model m in scene)
-            {
-                m.TransformModel(-10, 0, 0);
-            }
-            //повернуть солнышко
-            UpdScene(current);
-        }
-
-
         #endregion
 
     }

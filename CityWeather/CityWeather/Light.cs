@@ -9,7 +9,6 @@ namespace CityWeather
 {
     class LightSource
     {
-        public Point3D position;
         public Vector direction;
         public Color color;
         

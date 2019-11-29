@@ -28,10 +28,13 @@ namespace CityWeather
             vertices.Add(vertex);
         }
 
-        public void CreatePolygon(bool changeInd, params int[] indexes)
+        /// <summary>
+        /// Создание многоугольника используя индексы вершин модели
+        /// </summary>
+        /// <param name="indexes">Индексы вершин многоугольника из списка всех вершин модели</param>
+        public void CreatePolygon(params int[] indexes)
         {
-            if (changeInd)
-                this.indexes.Add(indexes);
+            this.indexes.Add(indexes);
 
             List<Point3D> verticesPolygon = new List<Point3D>();
             foreach (int i in indexes)
@@ -41,26 +44,18 @@ namespace CityWeather
             polygons.Add(new Polygon(verticesPolygon, basicColor));
         }
 
-        public void TransformModel(double tetax, double tetay, double tetaz, bool firstOper = false, int dx = 0, int dy = 0, int dz = 0)
+        /// <summary>
+        /// Повернуть модель вокруг осей x, y, z
+        /// </summary>
+        /// <param name="tetax">Угол поворота вокруг x</param>
+        /// <param name="tetay">Угол поворота вокруг y</param>
+        /// <param name="tetaz">Угол поворота вокруг z</param>
+        public void TransformModel(double tetax, double tetay, double tetaz)
         {
             foreach (Point3D v in vertices)
             {
-                if (!firstOper)
-                    Transformation.Move(ref v.x, ref v.y, ref v.z, dx, dy, dz);
-
                 Transformation.Transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
-
-                if (firstOper)
-                    Transformation.Move(ref v.x, ref v.y, ref v.z, dx, dy, dz);
-
-                polygons.Clear();
             }
-
-            foreach (int[] i in indexes)
-            {
-                CreatePolygon(false, i);
-            }
-
         }
     }
         
@@ -74,11 +69,6 @@ namespace CityWeather
         Vector normal;
 
         #region Создание Polygon
-        /*public Polygon()
-        {
-            pointsInside = new List<Point3D>();
-            v = new List<Point3D>();
-        }*/
         
         public Polygon(List<Point3D> vertex)
         {
@@ -105,13 +95,19 @@ namespace CityWeather
         #endregion
 
         #region Нахождение внутренних точек
-        public void CalculatePointsInside(int width, int height)
+
+        /// <summary>
+        /// Поиск точек, лежащих внутри многоугольника
+        /// </summary>
+        /// <param name="maxX">Максимальная х координата</param>
+        /// <param name="maxY">Максимальная y координата</param>
+        public void CalculatePointsInside(int maxX, int maxY)
         {
             pointsInside = new List<Point3D>();
 
             if (v.Count() > 4)
             {
-                ; // найти треугольники
+                ; // TODO: найти треугольники
                 //CalculatePointsInsideTriangle(width, height);
             }
             else if (v.Count() == 4)
@@ -120,18 +116,26 @@ namespace CityWeather
                 triangle.Add(v[0]);
                 triangle.Add(v[2]);
                 triangle.Add(v[1]);
-                CalculatePointsInsideTriangle(width, height, triangle);
+                CalculatePointsInsideTriangle(triangle, maxX, maxY);
                 triangle.RemoveAt(2);
                 triangle.Add(v[3]);
-                CalculatePointsInsideTriangle(width, height, triangle);
+                CalculatePointsInsideTriangle(triangle, maxX, maxY);
             }
             else if (v.Count() == 3)
             {
-                CalculatePointsInsideTriangle(width, height, v);
+                CalculatePointsInsideTriangle(v, maxX, maxY);
             }
         }
 
-        private void CalculatePointsInsideTriangle(int width, int height, List<Point3D> v)
+        /// <summary>
+        /// Поиск точек, лежащих внутри треугольника
+        /// </summary>
+        /// <param name="firstXPossible">Минимальная x координата</param>
+        /// <param name="firstYPossible">Минимальная y координата</param>
+        /// <param name="lastXPossible">Максимальная x координата</param>
+        /// <param name="lastYPossible">Максимальная y координата</param>
+        /// <param name="v">Вершины треугольника</param>
+        private void CalculatePointsInsideTriangle(List<Point3D> v, int lastXPossible, int lastYPossible, int firstXPossible = 0, int firstYPossible = 0)
         {
             int yMax, yMin;
             int[] x = new int[3], y = new int[3];
@@ -145,8 +149,8 @@ namespace CityWeather
             yMax = y.Max();
             yMin = y.Min();
 
-            yMin = (yMin < 0) ? 0 : yMin;
-            yMax = (yMax < height) ? yMax : height;
+            yMin = (yMin < firstYPossible) ? firstYPossible : yMin;
+            yMax = (yMax < lastYPossible) ? yMax : lastYPossible;
 
             int x1 = 0, x2 = 0;
             double z1 = 0, z2 = 0;
@@ -175,14 +179,14 @@ namespace CityWeather
                     fFirst = 0;
                 }
 
-                if(x2 < x1)
+                if (x2 < x1)
                 {
                     Swap(ref x1, ref x2);
                     Swap(ref z1, ref z2);
                 }
 
-                int xStart = (x1 < 0) ? 0 : x1;
-                int xEnd = (x2 < width)? x2 : width;
+                int xStart = (x1 < firstXPossible) ? firstXPossible : x1;
+                int xEnd = (x2 < lastXPossible)? x2 : lastXPossible;
                 for (int xDot = xStart; xDot < xEnd; xDot++)
                 {
                     double m = (double)(x1 - xDot) / (x1 - x2);
@@ -194,6 +198,10 @@ namespace CityWeather
         }
         #endregion
 
+        /// <summary>
+        /// Получение вектора нормали к многоугольнику
+        /// </summary>
+        /// <returns></returns>
         public Vector GetNormal()
         {
             int len = v.Count();
@@ -210,13 +218,18 @@ namespace CityWeather
             return new Vector(a, b, c);
         }
         
+        /// <summary>
+        /// Нахождение цвета многоугольника с наложением затемнения в зависимости от его расположения к источнику света
+        /// </summary>
+        /// <param name="light">Источник света</param>
+        /// <returns></returns>
         public Color GetColor(LightSource light)
         {
             double cos = Vector.ScalarMultiplication(light.direction, normal) / 
                 (light.direction.length * normal.length);
             cos = Math.Abs(cos);
             cos *= 255;
-            return Colors.mix(Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256), basicColor, 0.25f);
+            return Colors.Mix(Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256), basicColor, 0.25f);
             
         }
 
@@ -267,16 +280,39 @@ namespace CityWeather
             FindLength();
         }
         
+        /// <summary>
+        /// Нахождение длины вектора
+        /// </summary>
         private void FindLength()
         {
             length = Math.Sqrt(x * x + y * y + z * z);
         }
 
+        /// <summary>
+        /// Получение длины вектора
+        /// </summary>
+        /// <returns></returns>
         public double GetLength()
         {
             return length;
         }
 
+        /// <summary>
+        /// Вращение вектора относительно оси y
+        /// </summary>
+        /// <param name="tetay">Угол поворота</param>
+        public void RotateVectorY(double tetay)
+        {
+            tetay = tetay * Math.PI / 180;
+            double buf = x;
+            x = Math.Cos(tetay) * (x) - Math.Sin(tetay) * z;
+            z = Math.Cos(tetay) * z + Math.Sin(tetay) * (buf);
+        }
+
+        /// <summary>
+        /// Векторное умножение двух векторов
+        /// </summary>
+        /// <returns></returns>
         public static Vector VectorMultiplication(Vector a, Vector b)
         {
             Vector res = new Vector(0, 0, 0);
@@ -287,27 +323,41 @@ namespace CityWeather
             return res;
         }
 
+        /// <summary>
+        /// Скалярное умножение двух векторов
+        /// </summary>
         public static double ScalarMultiplication(Vector a, Vector b)
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }
 
+        /// <summary>
+        /// Получение угла tetax нужного для совмещения вектора a с вектором b 
+        /// </summary>
+        /// <returns></returns>
         public static double GetAngleXBetween(Vector a, Vector b)
         {
             double angleX = (Math.Acos(ScalarMultiplication(a, new Vector(0, b.y, b.z))) * 180) / Math.PI;
             return (b.y < 0) ? angleX : -angleX;
         }
 
+        /// <summary>
+        /// Получение угла tetay нужного для совмещения вектора a с вектором b 
+        /// </summary>
         public static double GetAngleYBetween(Vector a, Vector b)
         {
             double angleY =  (Math.Acos(ScalarMultiplication(a, new Vector(b.x, 0, b.z))) * 180) / Math.PI;
             return (b.x < 0) ? angleY : -angleY;
         }
 
+        /// <summary>
+        /// Получение угла tetaz нужного для совмещения вектора a с вектором b 
+        /// </summary>
         public static double GetAngleZBetween(Vector a, Vector b)
         {
             return -(Math.Acos(ScalarMultiplication(a, new Vector(b.x, b.y, 0))) * 180) / Math.PI;
         }
+
     }
     
 }

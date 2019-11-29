@@ -64,9 +64,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxfar = new System.Windows.Forms.TextBox();
             this.textBoxClose = new System.Windows.Forms.TextBox();
-            this.buttonUp = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
-            this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -78,31 +76,31 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(11, 53);
+            this.button2.Location = new System.Drawing.Point(107, 53);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(41, 23);
             this.button2.TabIndex = 2;
-            this.button2.Text = "1";
+            this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(58, 53);
+            this.button3.Location = new System.Drawing.Point(60, 53);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(41, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "2";
+            this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(105, 53);
+            this.button4.Location = new System.Drawing.Point(12, 53);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(41, 23);
             this.button4.TabIndex = 4;
-            this.button4.Text = "3";
+            this.button4.Text = "4";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -426,16 +424,6 @@
             this.textBoxClose.TabIndex = 17;
             this.textBoxClose.Text = "300";
             // 
-            // buttonUp
-            // 
-            this.buttonUp.Location = new System.Drawing.Point(1355, 148);
-            this.buttonUp.Name = "buttonUp";
-            this.buttonUp.Size = new System.Drawing.Size(75, 23);
-            this.buttonUp.TabIndex = 18;
-            this.buttonUp.Text = "button1";
-            this.buttonUp.UseVisualStyleBackColor = true;
-            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
-            // 
             // buttonLeft
             // 
             this.buttonLeft.Location = new System.Drawing.Point(1307, 183);
@@ -445,16 +433,6 @@
             this.buttonLeft.Text = "button5";
             this.buttonLeft.UseVisualStyleBackColor = true;
             this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
-            // 
-            // buttonDown
-            // 
-            this.buttonDown.Location = new System.Drawing.Point(1355, 226);
-            this.buttonDown.Name = "buttonDown";
-            this.buttonDown.Size = new System.Drawing.Size(75, 23);
-            this.buttonDown.TabIndex = 20;
-            this.buttonDown.Text = "button6";
-            this.buttonDown.UseVisualStyleBackColor = true;
-            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
             // 
             // buttonRight
             // 
@@ -472,9 +450,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1472, 617);
             this.Controls.Add(this.buttonRight);
-            this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonLeft);
-            this.Controls.Add(this.buttonUp);
             this.Controls.Add(this.textBoxClose);
             this.Controls.Add(this.textBoxfar);
             this.Controls.Add(this.label12);
@@ -537,9 +513,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBoxfar;
         private System.Windows.Forms.TextBox textBoxClose;
-        private System.Windows.Forms.Button buttonUp;
         private System.Windows.Forms.Button buttonLeft;
-        private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonRight;
         private System.Windows.Forms.TextBox textBoxSDz;
     }
