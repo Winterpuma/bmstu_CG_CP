@@ -291,6 +291,23 @@ namespace CityWeather
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }
+
+        public static double GetAngleXBetween(Vector a, Vector b)
+        {
+            double angleX = (Math.Acos(ScalarMultiplication(a, new Vector(0, b.y, b.z))) * 180) / Math.PI;
+            return (b.y < 0) ? angleX : -angleX;
+        }
+
+        public static double GetAngleYBetween(Vector a, Vector b)
+        {
+            double angleY =  (Math.Acos(ScalarMultiplication(a, new Vector(b.x, 0, b.z))) * 180) / Math.PI;
+            return (b.x < 0) ? angleY : -angleY;
+        }
+
+        public static double GetAngleZBetween(Vector a, Vector b)
+        {
+            return -(Math.Acos(ScalarMultiplication(a, new Vector(b.x, b.y, 0))) * 180) / Math.PI;
+        }
     }
     
 }
