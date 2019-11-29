@@ -11,12 +11,13 @@ namespace CityWeather
     {
         public Color c;
 
-        public static Color mix(Color a, Color b, float a_pers)
+        public static Color mix(Color a, Color b, float aPers)
         {
-            float b_pers = 1 - a_pers;
-            int red = (int)(a.R * a_pers + b.R * b_pers);
-            int green = (int)(a.G * a_pers + b.G * b_pers);
-            int blue = (int)(a.B * a_pers + b.B * b_pers);
+            aPers = Math.Min(aPers, 1);
+            float bPers = 1 - aPers;
+            int red = (int)(a.R * aPers + b.R * bPers);
+            int green = (int)(a.G * aPers + b.G * bPers);
+            int blue = (int)(a.B * aPers + b.B * bPers);
 
             return Color.FromArgb(red, green, blue);
         }
