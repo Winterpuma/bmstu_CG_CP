@@ -18,6 +18,7 @@ namespace CityWeather
         Graphics g;
         List<Model> scene;
         LightSource sun1, sun2, sun3, sun4, sun5, current;
+        Vector ViewDirection = new Vector(0, 0, -1);
         Zbuffer zbuf;
         ParticleSystem rain;
         static int ground = 400;
@@ -34,7 +35,7 @@ namespace CityWeather
             CreateScene();
             SetSun();
 
-            UpdScene(sun3);
+            UpdScene(sun1);
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
@@ -71,9 +72,9 @@ namespace CityWeather
         private void SetSun()
         {
             sun1 = new LightSource(new Vector(1, 0, 0), Color.White);
-            sun2 = new LightSource(new Vector(0.5, 0, -0.5), Color.White);
-            sun3 = new LightSource(new Vector(0, 0, -1), Color.White);
-            sun4 = new LightSource(new Vector(-0.5, 0, -0.5), Color.White);
+            sun2 = new LightSource(new Vector(0.5, -0.5, 0), Color.White);
+            sun3 = new LightSource(new Vector(0, -1, 0), Color.White);
+            sun4 = new LightSource(new Vector(-0.5, -0.5, 0), Color.White);
             sun5 = new LightSource(new Vector(-1, 0, 0), Color.White);
         }
         #endregion
@@ -93,26 +94,8 @@ namespace CityWeather
 
         private void UpdScene(LightSource sun)
         {
-            int dx = 1000, dy = 1000;
-            int tettay = -90, tettaz = 0; //их нужно найти еще
-
-            zbuf = new Zbuffer(scene, canvas.Size, sun);
-            /*foreach (Model m in scene)
-            {
-                m.TransformModel(0, tettay, tettaz, true, dx, dy);
-            }
-            
-            Zbuffer visFromSun = new Zbuffer(scene, new Size(canvas.Width + 2000, canvas.Height + 2000), sun);
-            */
-            //canvas.Image = visFromSun.GetImage();
-            canvas.Image = zbuf.AddShadows(tettay, tettaz);
-
-            /*foreach (Model m in scene)
-            {
-                m.TransformModel(0, -tettay, -tettaz, false, -dx, -dy);
-            }*/
-
-            //canvas.Image = zbuf.GetImage();
+            zbuf = new Zbuffer(scene, canvas.Size, sun, ViewDirection);
+            canvas.Image = zbuf.AddShadows();//zbuf.GetImage();
             current = sun;
         }
 

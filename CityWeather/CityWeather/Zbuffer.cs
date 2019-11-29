@@ -14,7 +14,9 @@ namespace CityWeather
         private int[][] Zbuf;
         private int[][] ZbufFromSun;
         LightSource sun;
+        Vector viewDir;
         Size size;
+        double tettax, tettay, tettaz;
 
         private static readonly int zBackground = -10000;
         
@@ -25,7 +27,7 @@ namespace CityWeather
         /// <param name="models">Список всех моделей сцены</param>
         /// <param name="size">Размер сцены</param>
         /// <returns></returns>
-        public Zbuffer(List<Model> models, Size size, LightSource sun)
+        public Zbuffer(List<Model> models, Size size, LightSource sun, Vector viewDir)
         {
             res = new Bitmap(size.Width, size.Height);
             
@@ -34,10 +36,20 @@ namespace CityWeather
 
             this.sun = sun;
             this.size = size;
+            this.viewDir = viewDir;
+            InitTeta();
+
             foreach (Model m in models)
             {
                 ProcessModel(m);
             }
+        }
+
+        private void InitTeta()
+        {
+            tettax = Vector.GetAngleXBetween(viewDir, sun.direction);
+            tettay = Vector.GetAngleYBetween(viewDir, sun.direction);
+            tettaz = Vector.GetAngleZBetween(viewDir, sun.direction);
         }
 
         /// <summary>
@@ -58,7 +70,7 @@ namespace CityWeather
             }
         }
 
-        public Bitmap AddShadows(double tettay, double tettaz)
+        public Bitmap AddShadows()
         {
             Bitmap hm = new Bitmap(size.Width, size.Height);
 
@@ -69,7 +81,7 @@ namespace CityWeather
                     int z = GetZ(i, j);
                     if (z != zBackground) 
                     {
-                        Point3D newCoord = Transformation.Transform(i, j, z, 0, tettay, tettaz);
+                        Point3D newCoord = Transformation.Transform(i, j, z, tettax, tettay, tettaz);
                         
                         if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
                             continue;
@@ -142,7 +154,7 @@ namespace CityWeather
                 Zbuf[point.y][point.x] = point.z;
                 res.SetPixel(point.x, point.y, color);
             }
-            Point3D turned = Transformation.Transform(point, 0, -90, 0); // считать углы поворота относительно солнца! TODO
+            Point3D turned = Transformation.Transform(point, tettax, tettay, tettaz); 
             if (turned.x < 0 || turned.x >= ZbufFromSun[0].Length || turned.y < 0 || turned.y >= ZbufFromSun.Length) 
                 return;
             if (turned.z > ZbufFromSun[turned.y][turned.x])
