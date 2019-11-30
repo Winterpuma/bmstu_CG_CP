@@ -72,9 +72,9 @@ namespace CityWeather
         private void SetSun()
         {
             sun1 = new LightSource(new Vector(1, 0, 0), Color.White);
-            sun2 = new LightSource(new Vector(0.5, -0.5, 0), Color.White);
+            sun2 = new LightSource(new Vector(0.4, -0.5, 0), Color.White);
             sun3 = new LightSource(new Vector(0, -1, 0), Color.White);
-            sun4 = new LightSource(new Vector(-0.5, -0.5, 0), Color.White);
+            sun4 = new LightSource(new Vector(-0.4, -0.5, 0), Color.White);
             sun5 = new LightSource(new Vector(-1, 0, 0), Color.White);
         }
         #endregion
@@ -99,8 +99,8 @@ namespace CityWeather
         private void UpdScene(LightSource sun)
         {
             zbuf = new Zbuffer(scene, canvas.Size, sun, viewDirection);
-            //canvas.Image = zbuf.AddShadows();
-            canvas.Image = zbuf.GetImage();
+            canvas.Image = zbuf.AddShadows();
+            //canvas.Image = zbuf.GetImage();
             currentSun = sun;
         }
 
@@ -190,10 +190,10 @@ namespace CityWeather
 
             m.CreatePolygon(3, 2, 6, 7); // верхняя
             m.CreatePolygon(0, 1, 2, 3); // передняя
-            m.CreatePolygon(0, 4, 7, 3); // левая
-            m.CreatePolygon(4, 5, 6, 7); // задняя
+            m.CreatePolygon(0, 3, 7, 4); // левая
+            m.CreatePolygon(4, 7, 6, 5); // задняя
             m.CreatePolygon(1, 5, 6, 2); // правая
-            m.CreatePolygon(0, 1, 5, 4); // нижняя
+            m.CreatePolygon(0, 4, 5, 1); // нижняя
 
             scene.Add(m);
         }
@@ -207,7 +207,7 @@ namespace CityWeather
             m.AddVertex(new Point3D(xCent - dx, ground, zCent - dz));
             m.AddVertex(new Point3D(xCent + dx, ground, zCent - dz));
 
-            m.CreatePolygon(0, 1, 2, 3);
+            m.CreatePolygon(0, 3, 2, 1);
 
             scene.Add(m);
         }

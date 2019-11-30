@@ -117,7 +117,11 @@ namespace CityWeather
                 triangle.Add(v[2]);
                 triangle.Add(v[1]);
                 CalculatePointsInsideTriangle(triangle, maxX, maxY);
-                triangle.RemoveAt(2);
+                //triangle.RemoveAt(2);
+                //triangle.Add(v[3]);
+                triangle = new List<Point3D>();
+                triangle.Add(v[0]);
+                triangle.Add(v[2]);
                 triangle.Add(v[3]);
                 CalculatePointsInsideTriangle(triangle, maxX, maxY);
             }
@@ -227,9 +231,11 @@ namespace CityWeather
         {
             double cos = Vector.ScalarMultiplication(light.direction, normal) / 
                 (light.direction.length * normal.length);
-            cos = Math.Abs(cos);
-            cos *= 255;
-            return Colors.Mix(Color.FromArgb((int)cos % 256, (int)cos % 256, (int)cos % 256), basicColor, 0.25f);
+            
+            if (cos <= 0)
+                return Colors.Mix(basicColor, Color.Black, 0.2f);
+
+            return Colors.Mix(basicColor, Color.Black, (float)cos);
             
         }
 
