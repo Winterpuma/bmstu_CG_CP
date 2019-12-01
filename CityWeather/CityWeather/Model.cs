@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace CityWeather
 {
@@ -56,6 +57,41 @@ namespace CityWeather
             {
                 Transformation.Transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
             }
+        }
+        
+        public static Model LoadModel(string path)
+        {
+            if (!File.Exists(path))
+                return null;
+
+            Model m = new Model(Color.Red);
+            foreach (string line in File.ReadLines(path))
+            {
+                if (line == "")
+                    continue;
+                if (line[0] == 'v' && line[1] == ' ')
+                {
+                    var el = line.Split(' ');
+                    
+                    if (el.Length == 5)
+                        m.AddVertex(new Point3D((int)Convert.ToDouble(el[2].Replace('.', ',')), (int)Convert.ToDouble(el[3].Replace('.', ',')), (int)Convert.ToDouble(el[4].Replace('.', ','))));
+                    else
+                        m.AddVertex(new Point3D((int)Convert.ToDouble(el[1].Replace('.', ',')), (int)Convert.ToDouble(el[2].Replace('.', ',')), (int)Convert.ToDouble(el[3].Replace('.', ','))));
+                }
+                else if (line[0] == 'f')
+                {
+                    var el = line.Split(' ');
+
+                    List<int> ind = new List<int>();
+                    for(int i = 1; i < el.Length - 1; i++)
+                    {
+                        if (el[i] != "")
+                            ind.Add(Convert.ToInt32((el[i].Split('/'))[0].Replace('.', ',')));
+                    }
+                    m.CreatePolygon(ind.ToArray());
+                }
+            }
+            return m;
         }
     }
         
@@ -219,6 +255,7 @@ namespace CityWeather
             a += (v[len - 1].y - v[0].y) * (v[len - 1].z + v[0].z);
             b += (v[len - 1].x - v[0].x) * (v[len - 1].z + v[0].z);
             c += (v[len - 1].x - v[0].x) * (v[len - 1].y + v[0].y);
+            
             return new Vector(a, b, c);
         }
         

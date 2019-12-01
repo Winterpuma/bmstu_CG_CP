@@ -66,6 +66,9 @@
             this.textBoxClose = new System.Windows.Forms.TextBox();
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
+            this.buttonView = new System.Windows.Forms.Button();
+            this.buttonViewShadows = new System.Windows.Forms.Button();
+            this.buttonViewSun = new System.Windows.Forms.Button();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -430,7 +433,7 @@
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(75, 23);
             this.buttonLeft.TabIndex = 19;
-            this.buttonLeft.Text = "button5";
+            this.buttonLeft.Text = "turn left";
             this.buttonLeft.UseVisualStyleBackColor = true;
             this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
             // 
@@ -440,15 +443,48 @@
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(75, 23);
             this.buttonRight.TabIndex = 21;
-            this.buttonRight.Text = "button7";
+            this.buttonRight.Text = "turn right";
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.buttonRight_Click);
+            // 
+            // buttonView
+            // 
+            this.buttonView.Location = new System.Drawing.Point(1307, 266);
+            this.buttonView.Name = "buttonView";
+            this.buttonView.Size = new System.Drawing.Size(75, 23);
+            this.buttonView.TabIndex = 22;
+            this.buttonView.Text = "View";
+            this.buttonView.UseVisualStyleBackColor = true;
+            this.buttonView.Click += new System.EventHandler(this.buttonView_Click);
+            // 
+            // buttonViewShadows
+            // 
+            this.buttonViewShadows.Location = new System.Drawing.Point(1307, 313);
+            this.buttonViewShadows.Name = "buttonViewShadows";
+            this.buttonViewShadows.Size = new System.Drawing.Size(98, 23);
+            this.buttonViewShadows.TabIndex = 23;
+            this.buttonViewShadows.Text = "View Shadows";
+            this.buttonViewShadows.UseVisualStyleBackColor = true;
+            this.buttonViewShadows.Click += new System.EventHandler(this.buttonViewShadows_Click);
+            // 
+            // buttonViewSun
+            // 
+            this.buttonViewSun.Location = new System.Drawing.Point(1307, 359);
+            this.buttonViewSun.Name = "buttonViewSun";
+            this.buttonViewSun.Size = new System.Drawing.Size(75, 23);
+            this.buttonViewSun.TabIndex = 24;
+            this.buttonViewSun.Text = "View Sun";
+            this.buttonViewSun.UseVisualStyleBackColor = true;
+            this.buttonViewSun.Click += new System.EventHandler(this.buttonViewSun_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1472, 617);
+            this.Controls.Add(this.buttonViewSun);
+            this.Controls.Add(this.buttonViewShadows);
+            this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.textBoxClose);
@@ -516,6 +552,9 @@
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonRight;
         private System.Windows.Forms.TextBox textBoxSDz;
+        private System.Windows.Forms.Button buttonView;
+        private System.Windows.Forms.Button buttonViewShadows;
+        private System.Windows.Forms.Button buttonViewSun;
     }
 }
 

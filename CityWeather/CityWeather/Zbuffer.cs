@@ -10,7 +10,8 @@ namespace CityWeather
 
     class Zbuffer
     {
-        private Bitmap res;
+        private Bitmap img;
+        private Bitmap imgFromSun;
         private int[][] Zbuf;
         private int[][] ZbufFromSun;
         LightSource sun;
@@ -29,8 +30,9 @@ namespace CityWeather
         /// <returns></returns>
         public Zbuffer(List<Model> models, Size size, LightSource sun, Vector viewDir)
         {
-            res = new Bitmap(size.Width, size.Height);
-            
+            img = new Bitmap(size.Width, size.Height);
+            imgFromSun = new Bitmap(size.Width, size.Height);
+
             InitBuf(ref Zbuf, size.Width, size.Height, zBackground);
             InitBuf(ref ZbufFromSun, size.Width, size.Height, zBackground);
 
@@ -89,10 +91,10 @@ namespace CityWeather
                         if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
                             continue;
 
-                        Color curPixColor = res.GetPixel(i, j);
-                        if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 0.5) // текущая точка невидима из источника света
+                        Color curPixColor = img.GetPixel(i, j);
+                        if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 2) // текущая точка невидима из источника света
                         {
-                            hm.SetPixel(i, j, Colors.Mix(Color.Black, curPixColor, 0.25f)); 
+                            hm.SetPixel(i, j, Colors.Mix(Color.Black, curPixColor, 0.4f)); 
                         }
                         else
                         {
@@ -108,7 +110,12 @@ namespace CityWeather
         #region Получить данные извне
         public Bitmap GetImage()
         {
-            return res;
+            return img;
+        }
+
+        public Bitmap GetSunImage()
+        {
+            return imgFromSun;
         }
 
         public int[][] GetZbuf()
@@ -136,7 +143,7 @@ namespace CityWeather
             Color draw;
             foreach (Polygon polygon in m.polygons)
             {
-                polygon.CalculatePointsInside(res.Width, res.Height);
+                polygon.CalculatePointsInside(img.Width, img.Height);
                 draw = polygon.GetColor(sun);
                 foreach (Point3D point in polygon.pointsInside)
                 {
@@ -152,19 +159,22 @@ namespace CityWeather
         /// <param name="color">Цвет точки</param>
         private void ProcessPoint(Point3D point, Color color)
         {
-            if (point.x < 0 || point.x >= Zbuf[0].Length || point.y < 0 || point.y >= Zbuf.Length) // а если нет zbuf0?
-                return;
-            if (point.z > Zbuf[point.y][point.x])
+            if (!(point.x < 0 || point.x >= Zbuf[0].Length || point.y < 0 || point.y >= Zbuf.Length))
             {
-                Zbuf[point.y][point.x] = point.z;
-                res.SetPixel(point.x, point.y, color);
+                if (point.z > Zbuf[point.y][point.x])
+                {
+                    Zbuf[point.y][point.x] = point.z;
+                    img.SetPixel(point.x, point.y, color);
+                }
             }
+            
             Point3D turned = Transformation.Transform(point, tettax, tettay, tettaz); 
             if (turned.x < 0 || turned.x >= ZbufFromSun[0].Length || turned.y < 0 || turned.y >= ZbufFromSun.Length) 
                 return;
             if (turned.z > ZbufFromSun[turned.y][turned.x])
             {
                 ZbufFromSun[turned.y][turned.x] = turned.z; // значит прошлая точка была в тени, если была
+                imgFromSun.SetPixel(imgFromSun.Width-turned.x - 1, imgFromSun.Height - 1 -turned.y, color);
             }
 
         }
