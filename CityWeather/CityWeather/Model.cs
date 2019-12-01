@@ -23,10 +23,15 @@ namespace CityWeather
             polygons = new List<Polygon>();
             indexes = new List<int[]>();
         }
-
+        
         public void AddVertex(Point3D vertex)
         {
             vertices.Add(vertex);
+        }
+
+        public void AddVertex(int x, int y, int z)
+        {
+            vertices.Add(new Point3D(x, y, z));
         }
 
         /// <summary>
@@ -59,6 +64,25 @@ namespace CityWeather
             }
         }
         
+        public Model GetTurnedModel(double tetax, double tetay, double tetaz)
+        {
+            Model m = new Model(basicColor);
+            
+            foreach (Point3D p in vertices)
+            {
+                m.AddVertex(p.x, p.y, p.z);
+            }
+
+            m.TransformModel(tetax, tetay, tetaz);
+
+            foreach(int[] i in indexes)
+            {
+                m.CreatePolygon(i);
+            }
+
+            return m;
+        }
+
         public static Model LoadModel(string path)
         {
             if (!File.Exists(path))

@@ -33,6 +33,8 @@ namespace CityWeather
             scene = new List<Model>();
 
             CreateScene();
+            //Model building = Model.LoadModel(@"D:\GitHub\bmstu_CG_CP\CityWeather\CityWeather\res\power.obj");
+            //scene.Add(building);
             SetSun();
 
             UpdScene(sun3);
@@ -104,6 +106,22 @@ namespace CityWeather
             currentSun = sun;
         }
 
+
+        private void buttonView_Click(object sender, EventArgs e)
+        {
+            canvas.Image = zbuf.GetImage();
+        }
+
+        private void buttonViewShadows_Click(object sender, EventArgs e)
+        {
+            canvas.Image = zbuf.AddShadows();
+        }
+
+        private void buttonViewSun_Click(object sender, EventArgs e)
+        {
+            canvas.Image = zbuf.GetSunImage();
+        }
+
         private void buttonAddBuilding_Click(object sender, EventArgs e)
         {
             int x = Convert.ToInt32(textBoxSX.Text);
@@ -160,6 +178,7 @@ namespace CityWeather
             rain.ProcessSystem(g, new Pen(Color.LightBlue, 2));
             canvas.Update();
         }
+        
         #endregion
 
         #region Туман

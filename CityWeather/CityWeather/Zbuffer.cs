@@ -43,8 +43,10 @@ namespace CityWeather
 
             foreach (Model m in models)
             {
-                ProcessModel(m);
+                ProcessModel(Zbuf, img, m);
+                ProcessModel(ZbufFromSun, imgFromSun, m.GetTurnedModel(tettax, tettay, tettaz));
             }
+            
         }
 
         /// <summary>
@@ -138,7 +140,7 @@ namespace CityWeather
         /// Обрабока одной модели для занесения ее в буфер
         /// </summary>
         /// <param name="m">Модель</param>
-        private void ProcessModel(Model m)
+        private void ProcessModel(int[][] buffer, Bitmap image, Model m)
         {
             Color draw;
             foreach (Polygon polygon in m.polygons)
@@ -147,7 +149,7 @@ namespace CityWeather
                 draw = polygon.GetColor(sun);
                 foreach (Point3D point in polygon.pointsInside)
                 {
-                    ProcessPoint(point, draw);
+                    ProcessPoint(buffer, image, point, draw);
                 }
             }
         }
@@ -157,26 +159,16 @@ namespace CityWeather
         /// </summary>
         /// <param name="point">Точка</param>
         /// <param name="color">Цвет точки</param>
-        private void ProcessPoint(Point3D point, Color color)
+        private void ProcessPoint(int[][] buffer, Bitmap image, Point3D point, Color color)
         {
-            if (!(point.x < 0 || point.x >= Zbuf[0].Length || point.y < 0 || point.y >= Zbuf.Length))
+            if (!(point.x < 0 || point.x >= image.Width || point.y < 0 || point.y >= image.Height))
             {
-                if (point.z > Zbuf[point.y][point.x])
+                if (point.z > buffer[point.y][point.x])
                 {
-                    Zbuf[point.y][point.x] = point.z;
-                    img.SetPixel(point.x, point.y, color);
+                    buffer[point.y][point.x] = point.z;
+                    image.SetPixel(point.x, point.y, color);
                 }
             }
-            
-            Point3D turned = Transformation.Transform(point, tettax, tettay, tettaz); 
-            if (turned.x < 0 || turned.x >= ZbufFromSun[0].Length || turned.y < 0 || turned.y >= ZbufFromSun.Length) 
-                return;
-            if (turned.z > ZbufFromSun[turned.y][turned.x])
-            {
-                ZbufFromSun[turned.y][turned.x] = turned.z; // значит прошлая точка была в тени, если была
-                imgFromSun.SetPixel(imgFromSun.Width-turned.x - 1, imgFromSun.Height - 1 -turned.y, color);
-            }
-
         }
 
     }
