@@ -28,7 +28,7 @@ namespace CityWeather
         /// <param name="models">Список всех моделей сцены</param>
         /// <param name="size">Размер сцены</param>
         /// <returns></returns>
-        public Zbuffer(List<Model> models, Size size, LightSource sun, Vector viewDir)
+        public Zbuffer(Scene s, Size size, LightSource sun, Vector viewDir)
         {
             img = new Bitmap(size.Width, size.Height);
             imgFromSun = new Bitmap(size.Width, size.Height);
@@ -41,7 +41,7 @@ namespace CityWeather
             this.viewDir = viewDir;
             InitTeta();
 
-            foreach (Model m in models)
+            foreach (Model m in s.GetModels())
             {
                 ProcessModel(Zbuf, img, m);
                 ProcessModel(ZbufFromSun, imgFromSun, m.GetTurnedModel(tettax, tettay, tettaz));

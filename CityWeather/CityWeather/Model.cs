@@ -364,6 +364,14 @@ namespace CityWeather
             return length;
         }
 
+        public void RotateVectorX(double tetax)
+        {
+            tetax = tetax * Math.PI / 180;
+            double buf = y;
+            y = Math.Cos(tetax) * (y) - Math.Sin(tetax) * z;
+            z = Math.Cos(tetax) * z + Math.Sin(tetax) * (buf);
+        }
+
         /// <summary>
         /// Вращение вектора относительно оси y
         /// </summary>
@@ -375,7 +383,7 @@ namespace CityWeather
             x = Math.Cos(tetay) * (x) - Math.Sin(tetay) * z;
             z = Math.Cos(tetay) * z + Math.Sin(tetay) * (buf);
         }
-
+        
         /// <summary>
         /// Векторное умножение двух векторов
         /// </summary>

@@ -69,6 +69,8 @@
             this.buttonView = new System.Windows.Forms.Button();
             this.buttonViewShadows = new System.Windows.Forms.Button();
             this.buttonViewSun = new System.Windows.Forms.Button();
+            this.buttonDown = new System.Windows.Forms.Button();
+            this.buttonUp = new System.Windows.Forms.Button();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -477,11 +479,33 @@
             this.buttonViewSun.UseVisualStyleBackColor = true;
             this.buttonViewSun.Click += new System.EventHandler(this.buttonViewSun_Click);
             // 
+            // buttonDown
+            // 
+            this.buttonDown.Location = new System.Drawing.Point(1355, 227);
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(75, 23);
+            this.buttonDown.TabIndex = 25;
+            this.buttonDown.Text = "turn Down";
+            this.buttonDown.UseVisualStyleBackColor = true;
+            this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
+            // 
+            // buttonUp
+            // 
+            this.buttonUp.Location = new System.Drawing.Point(1355, 139);
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(75, 23);
+            this.buttonUp.TabIndex = 26;
+            this.buttonUp.Text = "turn up";
+            this.buttonUp.UseVisualStyleBackColor = true;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1472, 617);
+            this.Controls.Add(this.buttonUp);
+            this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonViewSun);
             this.Controls.Add(this.buttonViewShadows);
             this.Controls.Add(this.buttonView);
@@ -555,6 +579,8 @@
         private System.Windows.Forms.Button buttonView;
         private System.Windows.Forms.Button buttonViewShadows;
         private System.Windows.Forms.Button buttonViewSun;
+        private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.Button buttonUp;
     }
 }
 
