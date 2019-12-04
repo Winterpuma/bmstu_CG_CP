@@ -405,34 +405,7 @@ namespace CityWeather
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }
-
-        /// <summary>
-        /// Получение угла tetax нужного для совмещения вектора a с вектором b 
-        /// </summary>
-        /// <returns></returns>
-        public static double GetAngleXBetween(Vector a, Vector b)
-        {
-            double angleX = (Math.Acos(ScalarMultiplication(a, new Vector(0, b.y, b.z))) * 180) / Math.PI;
-            return (b.y < 0) ? angleX : -angleX;
-        }
-
-        /// <summary>
-        /// Получение угла tetay нужного для совмещения вектора a с вектором b 
-        /// </summary>
-        public static double GetAngleYBetween(Vector a, Vector b)
-        {
-            double angleY =  (Math.Acos(ScalarMultiplication(a, new Vector(b.x, 0, b.z))) * 180) / Math.PI;
-            return (b.x < 0) ? angleY : -angleY;
-        }
-
-        /// <summary>
-        /// Получение угла tetaz нужного для совмещения вектора a с вектором b 
-        /// </summary>
-        public static double GetAngleZBetween(Vector a, Vector b)
-        {
-            return -(Math.Acos(ScalarMultiplication(a, new Vector(b.x, b.y, 0))) * 180) / Math.PI;
-        }
-
+        
     }
     
 }

@@ -9,14 +9,19 @@ namespace CityWeather
 {
     class LightSource
     {
-        public Vector direction;
         public Color color;
-        
-        public LightSource(Vector direction, Color color)
+        public double tetax = 90, tetay = 0, tetaz = 0;
+        public Vector direction;
+
+
+        public LightSource(Color color, double tetay, Vector direction)
         {
             this.direction = direction;
             this.color = color;
+            this.tetay = tetay;
         }
+
+        
     }
 
 }

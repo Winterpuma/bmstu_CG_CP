@@ -20,7 +20,6 @@ namespace CityWeather
         double tetax, tetay, tetaz;
 
         LightSource sun1, sun2, sun3, sun4, sun5, currentSun;
-        Vector viewDirection = new Vector(0, 0, -1);
         Zbuffer zbuf;
         ParticleSystem rain;
         
@@ -79,11 +78,11 @@ namespace CityWeather
 
         private void SetSun()
         {
-            sun1 = new LightSource(new Vector(1, 0, 0), Color.White);
-            sun2 = new LightSource(new Vector(0.4, -0.5, 0), Color.White);
-            sun3 = new LightSource(new Vector(0, -1, 0), Color.White);
-            sun4 = new LightSource(new Vector(-0.4, -0.5, 0), Color.White);
-            sun5 = new LightSource(new Vector(-1, 0, 0), Color.White);
+            sun1 = new LightSource(Color.White, -90, new Vector(1, 0, 0));
+            sun2 = new LightSource(Color.White, -110, new Vector(0.4, -0.5, 0));
+            sun3 = new LightSource(Color.White, 180, new Vector(0, -1, 0));
+            sun4 = new LightSource(Color.White, 110, new Vector(-0.4, -0.5, 0));
+            sun5 = new LightSource(Color.White, 90, new Vector(-1, 0, 0));
             currentSun = sun3;
         }
         #endregion
@@ -119,7 +118,7 @@ namespace CityWeather
         private void HandleSceneChange()
         {
             sceneTurned = scene.GetTurnedScene(tetax, tetay, tetaz);
-            zbuf = new Zbuffer(sceneTurned, canvas.Size, currentSun, viewDirection);
+            zbuf = new Zbuffer(sceneTurned, canvas.Size, currentSun);
             canvas.Image = zbuf.AddShadows();
         }
         #endregion
@@ -183,28 +182,24 @@ namespace CityWeather
         #region Повороты
         private void buttonLeft_Click(object sender, EventArgs e)
         {
-            viewDirection.RotateVectorY(-45);
             tetay -= 45;
             HandleSceneChange();
         }
 
         private void buttonRight_Click(object sender, EventArgs e)
         {
-            viewDirection.RotateVectorY(45);
             tetay += 45;
             HandleSceneChange();
         }
         
         private void buttonUp_Click(object sender, EventArgs e)
         {
-            viewDirection.RotateVectorX(20);
             tetax += 20;
             HandleSceneChange();
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
         {
-            viewDirection.RotateVectorX(-20);
             tetax -= 20;
             HandleSceneChange();
         }

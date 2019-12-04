@@ -15,7 +15,6 @@ namespace CityWeather
         private int[][] Zbuf;
         private int[][] ZbufFromSun;
         LightSource sun;
-        Vector viewDir;
         Size size;
         double tettax, tettay, tettaz;
 
@@ -28,7 +27,7 @@ namespace CityWeather
         /// <param name="models">Список всех моделей сцены</param>
         /// <param name="size">Размер сцены</param>
         /// <returns></returns>
-        public Zbuffer(Scene s, Size size, LightSource sun, Vector viewDir)
+        public Zbuffer(Scene s, Size size, LightSource sun)
         {
             img = new Bitmap(size.Width, size.Height);
             imgFromSun = new Bitmap(size.Width, size.Height);
@@ -38,7 +37,6 @@ namespace CityWeather
 
             this.sun = sun;
             this.size = size;
-            this.viewDir = viewDir;
             InitTeta();
 
             foreach (Model m in s.GetModels())
@@ -50,13 +48,13 @@ namespace CityWeather
         }
 
         /// <summary>
-        /// Нахождение углов между взглядом и источником света
+        /// Установка углов между взглядом и источником света
         /// </summary>
         private void InitTeta()
         {
-            tettax = Vector.GetAngleXBetween(viewDir, sun.direction);
-            tettay = Vector.GetAngleYBetween(viewDir, sun.direction);
-            tettaz = Vector.GetAngleZBetween(viewDir, sun.direction);
+            tettax = sun.tetax;
+            tettay = sun.tetay;
+            tettaz = sun.tetaz;
         }
 
         /// <summary>
