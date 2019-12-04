@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace CityWeather
 {
-    class Colors
+    static class Colors
     {
         /// <summary>
         /// Смешивание цветов в разных пропорциях

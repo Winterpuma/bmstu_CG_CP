@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityWeather
 {
-    class Transformation
+    static class Transformation
     {
         static int centerX = 0;
         static int centerY = 0;
