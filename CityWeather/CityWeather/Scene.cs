@@ -74,11 +74,11 @@ namespace CityWeather
 
             if (roof)
             {
-                m.AddVertex(new Point3D(xCent, ground - height - 40, zCent));
+                m.AddVertex(new Point3D(xCent, ground - height - 40, zCent)); // Верхушка i = 8
                 m.CreatePolygon(3, 2, 8);
-                m.CreatePolygon(3, 7, 8);
+                m.CreatePolygon(7, 3, 8);
                 m.CreatePolygon(6, 7, 8);
-                m.CreatePolygon(3, 7, 8);
+                m.CreatePolygon(2, 6, 8);
             }
 
             scene.Add(m);
@@ -114,12 +114,12 @@ namespace CityWeather
             m.AddVertex(new Point3D(xCent + dx, ground, zCent - dz)); // правая верхняя
             m.AddVertex(new Point3D(xCent - dx, ground, zCent - dz)); // левая верхняя
 
-            m.CreatePolygon(3, 2, 6, 7); // верхняя
-            m.CreatePolygon(0, 1, 2, 3); // передняя
-            m.CreatePolygon(0, 3, 7, 4); // левая
-            m.CreatePolygon(4, 7, 6, 5); // задняя
-            m.CreatePolygon(1, 5, 6, 2); // правая
-            m.CreatePolygon(0, 4, 5, 1); // нижняя
+            m.CreatePolygonSpecial(3, 2, 6, 7); // верхняя
+            m.CreatePolygonSpecial(0, 1, 2, 3); // передняя
+            m.CreatePolygonSpecial(0, 3, 7, 4); // левая
+            m.CreatePolygonSpecial(4, 7, 6, 5); // задняя
+            m.CreatePolygonSpecial(1, 5, 6, 2); // правая
+            m.CreatePolygonSpecial(0, 4, 5, 1); // нижняя
 
             scene.Add(m);
         }

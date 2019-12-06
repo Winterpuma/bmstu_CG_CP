@@ -49,6 +49,17 @@ namespace CityWeather
             }
             polygons.Add(new Polygon(verticesPolygon, basicColor));
         }
+        public void CreatePolygonSpecial(params int[] indexes)
+        {
+            this.indexes.Add(indexes);
+
+            List<Point3D> verticesPolygon = new List<Point3D>();
+            foreach (int i in indexes)
+            {
+                verticesPolygon.Add(vertices[i]);
+            }
+            polygons.Add(new Polygon(verticesPolygon, basicColor, true));
+        }
 
         /// <summary>
         /// Повернуть модель вокруг осей x, y, z
@@ -75,9 +86,12 @@ namespace CityWeather
 
             m.TransformModel(tetax, tetay, tetaz);
 
-            foreach(int[] i in indexes)
+            for(int i = 0; i < indexes.Count; i++)
             {
-                m.CreatePolygon(i);
+                if (polygons[i].special)
+                    m.CreatePolygonSpecial(indexes[i]);
+                else
+                    m.CreatePolygon(indexes[i]);
             }
 
             return m;
@@ -127,30 +141,34 @@ namespace CityWeather
         Color basicColor = Color.Gray;
         public List<Point3D> pointsInside;
         Vector normal;
+        public bool special = false;
 
         #region Создание Polygon
         
-        public Polygon(List<Point3D> vertex)
+        public Polygon(List<Point3D> vertex, bool special = false)
         {
             pointsInside = new List<Point3D>();
             v = vertex;
             normal = GetNormal();
+            this.special = special;
         }
 
-        public Polygon(Color color)
+        public Polygon(Color color, bool special = false)
         {
             basicColor = color;
             pointsInside = new List<Point3D>();
             v = new List<Point3D>();
             normal = GetNormal();
+            this.special = special;
         }
 
-        public Polygon(List<Point3D> vertex, Color color)
+        public Polygon(List<Point3D> vertex, Color color, bool special = false)
         {
             pointsInside = new List<Point3D>();
             v = vertex;
             basicColor = color;
             normal = GetNormal();
+            this.special = special;
         }
         #endregion
 

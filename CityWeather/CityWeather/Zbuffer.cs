@@ -42,7 +42,7 @@ namespace CityWeather
             foreach (Model m in s.GetModels())
             {
                 ProcessModel(Zbuf, img, m);
-                ProcessModel(ZbufFromSun, imgFromSun, m.GetTurnedModel(tettax, tettay, tettaz));
+                ProcessModelSpecial(ZbufFromSun, imgFromSun, m.GetTurnedModel(tettax, tettay, tettaz));
             }
             
         }
@@ -143,6 +143,22 @@ namespace CityWeather
             Color draw;
             foreach (Polygon polygon in m.polygons)
             {
+                polygon.CalculatePointsInside(img.Width, img.Height);
+                draw = polygon.GetColor(sun);
+                foreach (Point3D point in polygon.pointsInside)
+                {
+                    ProcessPoint(buffer, image, point, draw);
+                }
+            }
+        }
+
+        private void ProcessModelSpecial(int[][] buffer, Bitmap image, Model m)
+        {
+            Color draw;
+            foreach (Polygon polygon in m.polygons)
+            {
+                if (polygon.special)
+                    continue;
                 polygon.CalculatePointsInside(img.Width, img.Height);
                 draw = polygon.GetColor(sun);
                 foreach (Point3D point in polygon.pointsInside)
