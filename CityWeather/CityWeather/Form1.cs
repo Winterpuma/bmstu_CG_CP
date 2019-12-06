@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Timers;
+using System.Diagnostics;
 
 namespace CityWeather
 {
@@ -43,6 +44,29 @@ namespace CityWeather
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             label12.Text = zbuf.GetZ(e.X, e.Y).ToString();
+        }
+        
+        /// <summary>
+        /// Функция сравнения времени двух реализаций (Эксперементальная часть)
+        /// </summary>
+        public void CompareTime()
+        {
+            double res = AnalyseTime(zbuf.AddShadowsParallel);
+            double res2 = AnalyseTime(zbuf.AddShadows);
+            ;
+        }
+
+        public long AnalyseTime(Func<Bitmap> act)
+        {
+            int n = 20;
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            for (int i = 0; i < n; i++)
+                act();
+
+            stopWatch.Stop();
+            return (long)(stopWatch.Elapsed.Ticks)/(long)n;
         }
 
         #region Установка освещения

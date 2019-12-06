@@ -88,7 +88,7 @@ namespace CityWeather
 
             for(int i = 0; i < indexes.Count; i++)
             {
-                if (polygons[i].special)
+                if (polygons[i].ignore)
                     m.CreatePolygonSpecial(indexes[i]);
                 else
                     m.CreatePolygon(indexes[i]);
@@ -141,7 +141,7 @@ namespace CityWeather
         Color basicColor = Color.Gray;
         public List<Point3D> pointsInside;
         Vector normal;
-        public bool special = false;
+        public bool ignore = false; // игнорируем ли от лица солнца
 
         #region Создание Polygon
         
@@ -150,7 +150,7 @@ namespace CityWeather
             pointsInside = new List<Point3D>();
             v = vertex;
             normal = GetNormal();
-            this.special = special;
+            this.ignore = special;
         }
 
         public Polygon(Color color, bool special = false)
@@ -159,7 +159,7 @@ namespace CityWeather
             pointsInside = new List<Point3D>();
             v = new List<Point3D>();
             normal = GetNormal();
-            this.special = special;
+            this.ignore = special;
         }
 
         public Polygon(List<Point3D> vertex, Color color, bool special = false)
@@ -168,7 +168,7 @@ namespace CityWeather
             v = vertex;
             basicColor = color;
             normal = GetNormal();
-            this.special = special;
+            this.ignore = special;
         }
         #endregion
 
@@ -195,8 +195,6 @@ namespace CityWeather
                 triangle.Add(v[2]);
                 triangle.Add(v[1]);
                 CalculatePointsInsideTriangle(triangle, maxX, maxY);
-                //triangle.RemoveAt(2);
-                //triangle.Add(v[3]);
                 triangle = new List<Point3D>();
                 triangle.Add(v[0]);
                 triangle.Add(v[2]);

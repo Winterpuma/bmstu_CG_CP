@@ -70,12 +70,12 @@
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonUp = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBoxLight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -158,7 +158,7 @@
             this.groupBoxLight.Controls.Add(this.button3);
             this.groupBoxLight.Controls.Add(this.button4);
             this.groupBoxLight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBoxLight.Location = new System.Drawing.Point(1118, 159);
+            this.groupBoxLight.Location = new System.Drawing.Point(1044, 159);
             this.groupBoxLight.Name = "groupBoxLight";
             this.groupBoxLight.Size = new System.Drawing.Size(163, 90);
             this.groupBoxLight.TabIndex = 11;
@@ -185,7 +185,7 @@
             this.groupBox1.Controls.Add(this.textBoxDy);
             this.groupBox1.Controls.Add(this.textBoxDz);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(1118, 258);
+            this.groupBox1.Location = new System.Drawing.Point(1044, 258);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(163, 78);
             this.groupBox1.TabIndex = 12;
@@ -227,7 +227,7 @@
             this.groupBox2.Controls.Add(this.textBoxIntensiveness);
             this.groupBox2.Controls.Add(this.buttonRain);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(1118, 342);
+            this.groupBox2.Location = new System.Drawing.Point(1044, 342);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(163, 109);
             this.groupBox2.TabIndex = 13;
@@ -272,7 +272,7 @@
             // 
             this.canvas.Location = new System.Drawing.Point(21, 20);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(1068, 519);
+            this.canvas.Size = new System.Drawing.Size(1000, 500);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
@@ -292,7 +292,7 @@
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.buttonAddBuilding);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(1118, 20);
+            this.groupBox3.Location = new System.Drawing.Point(1044, 20);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(211, 133);
             this.groupBox3.TabIndex = 14;
@@ -495,21 +495,12 @@
             this.groupBox4.Controls.Add(this.textBoxClose);
             this.groupBox4.Controls.Add(this.textBoxfar);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox4.Location = new System.Drawing.Point(1118, 457);
+            this.groupBox4.Location = new System.Drawing.Point(1044, 457);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(160, 100);
             this.groupBox4.TabIndex = 27;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Туман";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 17);
-            this.label13.TabIndex = 15;
-            this.label13.Text = "zView:";
             // 
             // label14
             // 
@@ -520,13 +511,22 @@
             this.label14.TabIndex = 18;
             this.label14.Text = "zFar:";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(9, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 17);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "zView:";
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.buttonViewSun);
             this.groupBox5.Controls.Add(this.buttonViewShadows);
             this.groupBox5.Controls.Add(this.buttonView);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox5.Location = new System.Drawing.Point(1297, 277);
+            this.groupBox5.Location = new System.Drawing.Point(1223, 277);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(115, 109);
             this.groupBox5.TabIndex = 14;
@@ -540,22 +540,12 @@
             this.groupBox6.Controls.Add(this.buttonUp);
             this.groupBox6.Controls.Add(this.buttonDown);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox6.Location = new System.Drawing.Point(1297, 165);
+            this.groupBox6.Location = new System.Drawing.Point(1223, 165);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(142, 84);
             this.groupBox6.TabIndex = 14;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Поворот";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(-14, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "Влево";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonLeft_Click);
             // 
             // button5
             // 
@@ -567,11 +557,21 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.buttonRight_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(-14, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Влево";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.buttonLeft_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1472, 578);
+            this.ClientSize = new System.Drawing.Size(1388, 578);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
