@@ -33,7 +33,7 @@ namespace CityWeather
         {
             CreateGround(Color.Green, size.Width / 2, 400, 0, 500, 5);
             CreateCube(Color.DarkOrange, 300, 100, 0, 150, 300);
-            CreateCube(Color.Red, 750, 150, 100, 100, 100, true);
+            CreateCube(Color.Red, 700, 150, 100, 100, 100, true);
         }
         
         public Scene GetTurnedScene(double tetax, double tetay, double tetaz)

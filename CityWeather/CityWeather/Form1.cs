@@ -135,7 +135,7 @@ namespace CityWeather
             int dx = Convert.ToInt32(textBoxSDx.Text);
             int dz = Convert.ToInt32(textBoxSDz.Text);
             int h = Convert.ToInt32(textBoxSH.Text);
-            scene.CreateCube(Color.Black, x, dx, z, dz, h);
+            scene.CreateCube(Color.DarkKhaki, x, dx, z, dz, h);
             HandleSceneChange();
         }
 

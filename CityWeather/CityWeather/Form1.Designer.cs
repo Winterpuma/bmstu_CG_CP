@@ -236,9 +236,9 @@
             // 
             // textBoxDelay
             // 
-            this.textBoxDelay.Location = new System.Drawing.Point(98, 50);
+            this.textBoxDelay.Location = new System.Drawing.Point(120, 50);
             this.textBoxDelay.Name = "textBoxDelay";
-            this.textBoxDelay.Size = new System.Drawing.Size(48, 23);
+            this.textBoxDelay.Size = new System.Drawing.Size(26, 23);
             this.textBoxDelay.TabIndex = 10;
             this.textBoxDelay.Text = "10";
             // 
@@ -247,9 +247,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(7, 53);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 17);
+            this.label5.Size = new System.Drawing.Size(97, 17);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Задержка:";
+            this.label5.Text = "Задержка,мс:";
             // 
             // label4
             // 
@@ -263,10 +263,11 @@
             // textBoxIntensiveness
             // 
             this.textBoxIntensiveness.Location = new System.Drawing.Point(120, 27);
+            this.textBoxIntensiveness.MaxLength = 1;
             this.textBoxIntensiveness.Name = "textBoxIntensiveness";
             this.textBoxIntensiveness.Size = new System.Drawing.Size(26, 23);
             this.textBoxIntensiveness.TabIndex = 7;
-            this.textBoxIntensiveness.Text = "5";
+            this.textBoxIntensiveness.Text = "2";
             // 
             // canvas
             // 
@@ -313,7 +314,7 @@
             this.textBoxSDz.Name = "textBoxSDz";
             this.textBoxSDz.Size = new System.Drawing.Size(38, 23);
             this.textBoxSDz.TabIndex = 25;
-            this.textBoxSDz.Text = "-50";
+            this.textBoxSDz.Text = "50";
             // 
             // textBoxSDx
             // 
@@ -321,7 +322,7 @@
             this.textBoxSDx.Name = "textBoxSDx";
             this.textBoxSDx.Size = new System.Drawing.Size(38, 23);
             this.textBoxSDx.TabIndex = 24;
-            this.textBoxSDx.Text = "20";
+            this.textBoxSDx.Text = "100";
             // 
             // textBoxSZ
             // 
@@ -329,7 +330,7 @@
             this.textBoxSZ.Name = "textBoxSZ";
             this.textBoxSZ.Size = new System.Drawing.Size(38, 23);
             this.textBoxSZ.TabIndex = 23;
-            this.textBoxSZ.Text = "100";
+            this.textBoxSZ.Text = "-300";
             // 
             // textBoxSX
             // 
@@ -337,7 +338,7 @@
             this.textBoxSX.Name = "textBoxSX";
             this.textBoxSX.Size = new System.Drawing.Size(38, 23);
             this.textBoxSX.TabIndex = 21;
-            this.textBoxSX.Text = "30";
+            this.textBoxSX.Text = "450";
             // 
             // label11
             // 
