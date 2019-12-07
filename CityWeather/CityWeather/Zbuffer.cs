@@ -51,7 +51,6 @@ namespace CityWeather
                 ProcessModel(Zbuf, img, m);
                 ProcessModelForSun(ZbufFromSun, imgFromSun, m.GetTurnedModel(tettax, tettay, tettaz));
             }
-
         }
 
         /// <summary>
@@ -101,10 +100,13 @@ namespace CityWeather
                     {
                         Point3D newCoord = Transformation.Transform(i, j, z, tettax, tettay, tettaz);
                         
-                        if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
-                            continue;
-
                         Color curPixColor = img.GetPixel(i, j);
+                        if (newCoord.x < 0 || newCoord.y < 0 || newCoord.x >= size.Width || newCoord.y >= size.Height)
+                        {
+                            hm.SetPixel(i, j, curPixColor); //тени не считаются, чтобы увидеть эти места -> убрать эту строку;
+                            continue;
+                        }
+
                         if (ZbufFromSun[newCoord.y][newCoord.x] > newCoord.z + 5) // текущая точка невидима из источника света
                         {
                             hm.SetPixel(i, j, Colors.Mix(Color.Black, curPixColor, 0.4f)); 
