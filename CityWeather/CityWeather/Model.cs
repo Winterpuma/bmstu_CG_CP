@@ -69,12 +69,21 @@ namespace CityWeather
         /// <param name="tetaz">Угол поворота вокруг z</param>
         public void TransformModel(double tetax, double tetay, double tetaz)
         {
+            tetax = tetax * Math.PI / 180;
+            tetay = tetay * Math.PI / 180;
+            tetaz = tetaz * Math.PI / 180;
+            double cosTetX = Math.Cos(tetax), sinTetX = Math.Sin(tetax);
+            double cosTetY = Math.Cos(tetay), sinTetY = Math.Sin(tetay);
+            double cosTetZ = Math.Cos(tetaz), sinTetZ = Math.Sin(tetaz);
             foreach (Point3D v in vertices)
             {
-                Transformation.Transform(ref v.x, ref v.y, ref v.z, tetax, tetay, tetaz);
+                Transformation.Transform(ref v.x, ref v.y, ref v.z, cosTetX, sinTetX, cosTetY, sinTetY, cosTetZ, sinTetZ);
             }
         }
         
+        /// <summary>
+        /// Получить модель, повернутую на углы teta
+        /// </summary>
         public Model GetTurnedModel(double tetax, double tetay, double tetaz)
         {
             Model m = new Model(basicColor);
